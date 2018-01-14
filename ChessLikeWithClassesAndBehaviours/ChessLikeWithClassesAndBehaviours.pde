@@ -34,13 +34,13 @@ void setup() {
   
   // do a double for loop to run through the grid 2D array
   // creating new alternating black and white WhiteSquare objects
-  for (int n = 1; n < cols; n+=2) {
+  for (int n = 0; n < cols; n+=2) {
     for (int m = 1; m < rows; m+=2) {
       white[n][m] = new WhiteSquare(n, m, gridSquareSize);
     }
   }
 
-  for (int n = 0; n < cols; n+=2) {
+  for (int n = 1; n < cols; n+=2) {
     for (int m = 0; m < rows; m+=2) {
       white[n][m] = new WhiteSquare(n, m, gridSquareSize);
     }
@@ -65,13 +65,13 @@ void draw() {
     }
   }
   
-   for (int n = 1; n < cols; n+=2) {
+   for (int n = 0; n < cols; n+=2) {
     for (int m = 1; m < rows; m+=2) {
       white[n][m].update();
       white[n][m].render();
     } 
   }
-   for (int n = 0; n < cols; n+=2) {
+   for (int n = 1; n < cols; n+=2) {
     for (int m = 0; m < rows; m+=2) {
       white[n][m].update();
       white[n][m].render();
@@ -85,5 +85,10 @@ void draw() {
   // do mouseOver-based feeding only on **valid** grid slots
   if ((currentHorizSquare >= 0 && currentHorizSquare <= 7 && currentVertSquare >= 0 && currentVertSquare <= 7)&&(grid[currentHorizSquare][currentVertSquare] != null)) {
       grid[currentHorizSquare][currentVertSquare].feed();
+  }
+  
+    // do mousePressed-based calming only on **valid** grid slots
+  if ((currentHorizSquare >= 0 && currentHorizSquare <= 7 && currentVertSquare >= 0 && currentVertSquare <= 7)&&(white[currentHorizSquare][currentVertSquare] != null)) {
+      white[currentHorizSquare][currentVertSquare].calm();
   }
 }

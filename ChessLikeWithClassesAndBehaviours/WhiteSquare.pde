@@ -4,6 +4,8 @@ class WhiteSquare {
   int y;
   int size;
   float red;
+  float otherColour;
+  float colour;
   float angry;
 
 
@@ -14,31 +16,32 @@ class WhiteSquare {
 
 
     // establish a random amount of food to start with
-    this.angry = random(500, 1000);
-      this.red = 0;
+    this.angry = 0;
+      this.otherColour = 255;
+      this.colour = color(255, otherColour, otherColour);
     }
 
 
   void render() {
 
       // reflect the amount of food
-      red = (int)map(this.angry, 0, 1000, 255, 0);
+      otherColour = (int)map(this.angry, 0, 1000, 255, 0);
 
 
 
-    fill(red, 0, 0, 10);
+    fill(255, otherColour, otherColour);
     rect(this.x * size, this.y * size, size, size);
   }
 
   void update() {
-    if(this.angry > 0) {
-      this.angry--;
+    if(this.angry < 1000) {
+      this.angry++;
     }
   }
 
-  void feed() {
-    if (this.angry < 1000) {
-      this.angry += 10;
+  void calm() {
+    if (this.angry > 0 && mousePressed) {
+      this.angry -= 100;
       
     }
   }
