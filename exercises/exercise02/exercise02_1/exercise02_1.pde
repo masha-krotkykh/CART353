@@ -29,7 +29,15 @@ void mouseClicked() {
   if(mouseX > 0 && mouseX <= width / 2 && mouseY > 0 && mouseY <= height / 2) { 
     front.firstClicked = !front.firstClicked; 
   }
-
+  if(mouseX > width / 2 && mouseX <= width && mouseY > 0 && mouseY <= height / 2){ 
+    front.secondClicked = !front.secondClicked; 
+  } 
+  if(mouseX > 0 && mouseX <= width / 2 && mouseY > height / 2 && mouseY <= height){ 
+    front.thirdClicked = !front.thirdClicked; 
+  } 
+  if(mouseX > width / 2 && mouseX <= width && mouseY > height / 2 && mouseY <= height){ 
+    front.fourthClicked = !front.fourthClicked; 
+  } 
 }
 
 void keyPressed() {
