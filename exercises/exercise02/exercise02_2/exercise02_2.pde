@@ -12,3 +12,9 @@ void draw() {
   img.checkMouse();
   img.display();  
 }
+
+void keyPressed() {
+  if(key == 's' || key == 'S') {
+    save("image.jpg");
+  }
+}

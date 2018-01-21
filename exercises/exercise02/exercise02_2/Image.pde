@@ -52,6 +52,8 @@ class Image {
         g2 = green(color2); 
         b2 = blue(color2);
 
+        // Combine RGB values of two images in different proportions to achieve crossfade effect
+        // when image "fades in", the other one "fades out" at the same rate
         r = alfa*r1+(1.0-alfa)*r2;
         g = alfa*g1+(1.0-alfa)*g2;
         b = alfa*b1+(1.0-alfa)*b2;
@@ -63,9 +65,15 @@ class Image {
     updatePixels();
     }
   
+  // The crossfade only occures when the mouse is pressed. When the value of alfa reaches 
+  // 1, instead of going down, it starts going up because fade variable changes its value
+  // to opposite. Same happens when alfa reaches 0.
   void checkMouse() {
     if(mousePressed) {
       alfa = alfa + fade;
+    }
+    if (alfa >= 1 || alfa < 0) {
+      fade = -fade;
     }
   }
 
