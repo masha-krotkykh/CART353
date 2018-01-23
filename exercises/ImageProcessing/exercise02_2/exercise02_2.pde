@@ -1,4 +1,6 @@
 // A crossfade of 2 images on mousePress
+// Code based on learningprocessing.com
+// http://learningprocessing.com/exercises/chp15/exercise-15-11-crossfade
 Image img;
 
 void setup() {
