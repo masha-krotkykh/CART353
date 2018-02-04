@@ -1,56 +1,62 @@
+// Based on
+// Learning Processing
+// Daniel Shiffman
+// http://www.learningprocessing.com
+// Example 16-3: Adjust video brightness
 
 // Import the video library
 import processing.video.*;
 
 Capture video;
+RandomMover mover;
 
-// An array of movers to display
-RandomMover[] movers = new RandomMover[5];
 
-// Create the movers and starts the webcam
+// Create the mover and starts the webcam
 
 void setup() {
   size(640, 480);
-  for (int i = 0; i < movers.length; i++) {
-    // Each RandomMover just starts with random values 
-    movers[i] = new RandomMover(random(0,width),random(0,height),random(-10,10),random(-10,10),random(20,50),color(random(255)));
-  }
+  colorMode(HSB);
+    mover = new RandomMover(random(0,width), random(0,height), random(-10,10), random(-10,10), 5);
+
   
   // Start up the webcam
-  video = new Capture(this, 640, 480, 30);
+  video = new Capture(this, 640, 480);
   video.start();
 }
-
-// Processes the frame of video, draws the video to the screen, updates the RandomMovers
-
-void draw() {
-  // Processes the current frame of video
-  handleVideoInput();
-
-  // Draw the video frame to the screen
-  image(video, 0, 0);
-  
-  // Loop through array of movers to update and display them
-  for (int i = 0; i < movers.length; i++) {
-   movers[i].update();
-   movers[i].display();
-
-  }
-
+void captureEvent(Capture video) {  
+  // Read the image from the camera.  
+  video.read();
 }
 
-// handleVideoInput
-//
-// Checks for available video, reads the frame
-
-void handleVideoInput() {
-  // Check if there's a frame to look at
-  if (!video.available()) {
-    // If not, then just return, nothing to do
-    return;
-  }
+void draw() {
+  loadPixels();
+  video.loadPixels();  
+  for (int x = 0; x < video.width; x++) {    
+    for (int y = 0; y < video.height; y++) {      
+      // Calculate the 1D location from a 2D grid
+      int loc = x + y * video.width;      
+    
+      float h = hue(video.pixels[loc]);
+      float s = saturation(video.pixels[loc]);
+      float br = brightness(video.pixels[loc]);
+      
+      // Calculate an amount to change saturation based on proximity to the mover      
+      float d = dist(x, y, mover.x, mover.y);      
+      float adjustsaturation = map(d, 0, 100, 10, 0);   
+      
+      s *= adjustsaturation;      
+      
+      // Constrain RGB to make sure they are within 0-255 color range      
+      s = constrain(s, 0, 255);          
+    
+      // Make a new color and set pixel in the window      
+      color c = color(h, s, br);      
+      pixels[loc] = c;    
+    }  
+  } 
+ 
+   mover.update();
+   mover.display();
   
-  // If we're here, there IS a frame to look at so read it in
-  video.read();
-
+  updatePixels();
 }
