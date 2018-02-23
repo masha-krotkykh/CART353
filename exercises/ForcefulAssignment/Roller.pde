@@ -23,31 +23,16 @@ class Roller {
     rot = 0.0;
   }
  
-  void applyForce(PVector force) {
-    PVector f = PVector.div(force, mass);
-    acceleration.add(f);
-  }
- 
   void update() {
     // trapping the Roller inside the window
     location.y = constrain(location.y, size / 2, height - size / 2);
     location.x = constrain(location.x, size / 2, width - size / 2);
     
     //defining controls for the Roller - will be moved around with arrow keys and rotate at the same time
-    if (rollRight == true) {
-      velocity.x += 1; 
+    if (rollRight == true || rollUp == true) {
       rot += 0.09;
     } 
-    else if (rollLeft == true) {
-      velocity.x -= 1;
-      rot -=0.09;
-    }
-    else if (rollUp == true) {
-      velocity.y -= 1; 
-      rot +=0.09;
-    }
-    else if (rollDown == true) {
-      velocity.y += 1;
+    else if (rollLeft == true || rollDown == true) {
       rot -=0.09;
     }
     
@@ -56,6 +41,12 @@ class Roller {
     location.add(velocity);
     velocity.mult(0);
 } 
+
+  void applyForce(PVector force) {
+    PVector f = PVector.div(force, mass);
+    acceleration.add(f);
+  }
+
   // displaying the Roller as an image, defining rotation for "rolling"
   void display() {
     pushMatrix();

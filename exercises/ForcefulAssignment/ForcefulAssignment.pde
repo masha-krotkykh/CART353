@@ -17,16 +17,42 @@ void setup(){
 void draw() {
   background(0);
 
+// defining the variables that will be passed to newVelocity PVector according to which key is being pressed
+  float x;
+  float y;
+  if (rollRight) {
+    x = 1;
+  }  
+  else if (rollLeft) { 
+    x = -1;
+  }
+  else {
+    x = 0;
+  }
+  if (rollUp) {
+    y = -1;
+  }
+  else if (rollDown) {
+    y = 1;
+  }
+  else {
+    y = 0;
+  }
+  
+  PVector newVelocity = new PVector(x, y);
+  roller.applyForce(newVelocity);
+  newVelocity.mult(0);
+
   // defining forces that will influence the roller in special parts of the screen
   // friction should make its movement more difficult
-  float c1 = 0.03;
-  PVector friction = roller.velocity.get();
+  float c1 = 0.8;
+  PVector friction = roller.acceleration.get();
   friction.mult(-1);
   friction.normalize();
   friction.mult(c1);
   
   // antifriction should speed it up
-  float c2 = 100;
+  float c2 = 2;
   PVector antifriction = roller.acceleration.get();
   antifriction.mult(1);
   antifriction.normalize();
@@ -79,4 +105,5 @@ void keyReleased() {
   rollLeft = false;
   rollUp = false;
   rollDown = false;
+  roller.acceleration.mult(0); 
  } 
