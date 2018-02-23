@@ -1,43 +1,82 @@
+// Creating a simple program with a Roller that will be moved around the screen with the arrow keys
+// to collect objects and be infuenced by different forces
 
+// by default the Roller stands still and waits for a key to be pressed
 Roller roller;
 boolean rollRight = false;
 boolean rollLeft = false;
 boolean rollUp = false;
 boolean rollDown = false;
-float moveRight = 0;
 
+// setting up the window and creating an instance of a Roller
 void setup(){
-  size(640, 480);
+  size(900, 500);
   roller = new Roller();
 }
 
 void draw() {
-  background(255);
- 
+  background(0);
+
+  // defining forces that will influence the roller in special parts of the screen
+  // friction should make its movement more difficult
+  float c1 = 0.03;
+  PVector friction = roller.velocity.get();
+  friction.mult(-1);
+  friction.normalize();
+  friction.mult(c1);
+  
+  // antifriction should speed it up
+  float c2 = 100;
+  PVector antifriction = roller.acceleration.get();
+  antifriction.mult(1);
+  antifriction.normalize();
+  antifriction.mult(c2); 
+  
+  // checking if the Roller is one of the "special" places and applying forces accordingly
+  if (roller.location.x >= 550 && roller.location.x <= 700) {
+    roller.applyForce(antifriction);
+    println("antifriction");
+  }
+  
+  if (roller.location.y >= 50 && roller.location.y <= 200) {
+    roller.applyForce(friction);
+    println("friction");
+  }
+  
+  // drawing rectangles to indicate "special" zones where forces will be applied
+  noStroke();
+  fill(0, 100, 150, 100);
+  rect(550, 0, 150, height);
+  
+  fill(200, 200, 100, 80);
+  rect(0, 50, width, 150);
+  
+  // updating and displaying the Roller
   roller.update();
   roller.display();
-  roller.checkEdges();
-
+  
 }
 
+// setting up controls to move the Roller around the screen
 void keyPressed() {
   if (keyCode == RIGHT) {
     rollRight = true;
   }
-  if (keyCode == UP) {
-    rollUp = true;
-  }
   if (keyCode == LEFT) {
     rollLeft = true;
   }
-  if(keyCode == DOWN) {
+  if (keyCode == UP) {
+    rollUp = true;
+  }
+  if (keyCode == DOWN) {
     rollDown = true;
   }
 }  
 
+// making sure that the movement stops when the key is released
 void keyReleased() {
   rollRight = false;
   rollLeft = false;
   rollUp = false;
   rollDown = false;
-}  
+ } 

@@ -1,16 +1,26 @@
+
+// class for the Roller that will be moved around the screen with arrow keys while rotating 
+// some parts of code were borrowed from The Nature of Code by Daniel Shiffman
+
 class Roller {
  
+  // declaring variables for mass, size, position, as well as image, rotation, and PVectors
   PVector location;
   PVector velocity;
   PVector acceleration;
   float mass = 10;
   int size = 50;
-  PImage rolloImg;
-  
+  PImage rolloImg = loadImage("rollo.png");
+  float rot;
+  float x = width / 4;
+  float y = height - 50;
+   
   Roller() {
-    location = new PVector(0 + size / 2, height - size * 2);
+    //defining starting state for the Roller
+    location = new PVector(x, y);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
+    rot = 0.0;
   }
  
   void applyForce(PVector force) {
@@ -19,36 +29,40 @@ class Roller {
   }
  
   void update() {
-    PVector velocityNew = velocity.get(); 
-    velocityNew.normalize();
+    // trapping the Roller inside the window
+    location.y = constrain(location.y, size / 2, height - size / 2);
+    location.x = constrain(location.x, size / 2, width - size / 2);
     
-    
+    //defining controls for the Roller - will be moved around with arrow keys and rotate at the same time
     if (rollRight == true) {
-      velocityNew.add(1, 0);  
+      velocity.x += 1; 
+      rot += 0.09;
     } 
     else if (rollLeft == true) {
-      velocityNew.add(-1, 0); 
+      velocity.x -= 1;
+      rot -=0.09;
     }
     else if (rollUp == true) {
-      velocityNew.add(0, -1);  
+      velocity.y -= 1; 
+      rot +=0.09;
     }
     else if (rollDown == true) {
-      velocityNew.add(0, 1); 
-    } 
+      velocity.y += 1;
+      rot -=0.09;
+    }
     
+    // putting movement together : acceleration to define velocity, velocity to define position and resetting velocity so that it doesn't build up
     velocity.add(acceleration);
-    location.add(velocityNew);
-    velocityNew.mult(0);
+    location.add(velocity);
+    velocity.mult(0);
 } 
+  // displaying the Roller as an image, defining rotation for "rolling"
   void display() {
-    stroke(0);
-    fill(175);
-    ellipse(location.x, location.y, size, size);
-  }
- 
-  void checkEdges() {
-    if (location.x > width + size / 2) {
-      location.x = 0 - size / 2;
-    } 
+    pushMatrix();
+    translate(location.x, location.y); 
+    rotate(rot);
+    imageMode(CENTER);
+    image(rolloImg, 0, 0);
+    popMatrix();
   }
 }
