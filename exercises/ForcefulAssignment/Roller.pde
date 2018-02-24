@@ -8,12 +8,13 @@ class Roller {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  float mass = 10;
+  float mass;
   int size = 50;
   PImage rolloImg = loadImage("rollo.png");
   float rot;
   float x = width / 4;
   float y = height - 50;
+  float G;
    
   Roller() {
     //defining starting state for the Roller
@@ -21,8 +22,23 @@ class Roller {
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
     rot = 0.0;
+    G = 1;
+    mass = 20;
   }
  
+ 
+  // Code to attract artifacts to the Roller
+  // Borrowed from Daniel Shiffman
+    PVector attract(Artifact artifact) {
+    PVector attraction = PVector.sub(location, artifact.location);   // Calculate direction of force
+    float d = attraction.mag();                              // Distance between objects
+    d = constrain(d, 0, 150);                        // Limiting the distance to eliminate "extreme" results for very close or very far objects
+    attraction.normalize();                                  // Normalize vector (distance doesn't matter here, we just want this vector for direction)
+    float strength = (roller.G * mass * artifact.mass) / (d * d);      // Calculate gravitional force magnitude
+    attraction.mult(strength);                                  // Get force vector --> magnitude * direction
+    return attraction;
+  }
+  
   void update() {
     // trapping the Roller inside the window
     location.y = constrain(location.y, size / 2, height - size / 2);

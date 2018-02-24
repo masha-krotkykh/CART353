@@ -8,10 +8,23 @@ boolean rollLeft = false;
 boolean rollUp = false;
 boolean rollDown = false;
 
+Artifact[] artifacts = new Artifact[20];
+PImage[] artImages = new PImage[4]; 
+
 // setting up the window and creating an instance of a Roller
+// and four images for artifacts
 void setup(){
   size(900, 500);
   roller = new Roller();
+  artImages[0] = loadImage("01.png");
+  artImages[1] = loadImage("02.png");
+  artImages[2] = loadImage("03.png");
+  artImages[3] = loadImage("04.png");
+  
+  // creating instances artifacts
+  for (int a = 0; a < artifacts.length; a++) {
+    artifacts[a] = new Artifact(artImages[int(random(0,4))], 5, random(0, width), random(0, height));
+  }
 }
 
 void draw() {
@@ -61,12 +74,10 @@ void draw() {
   // checking if the Roller is one of the "special" places and applying forces accordingly
   if (roller.location.x >= 550 && roller.location.x <= 700) {
     roller.applyForce(antifriction);
-    println("antifriction");
   }
   
   if (roller.location.y >= 50 && roller.location.y <= 200) {
     roller.applyForce(friction);
-    println("friction");
   }
   
   // drawing rectangles to indicate "special" zones where forces will be applied
@@ -81,6 +92,15 @@ void draw() {
   roller.update();
   roller.display();
   
+  // looping through an array of artifacts and applying forces to them
+  // checking edges, updating, and displaying artifacts
+  for (int a = 0; a < artifacts.length; a++) {
+    PVector attract = roller.attract(artifacts[a]);
+    artifacts[a].applyForce(attract);
+    artifacts[a].checkEdges();
+    artifacts[a].update();
+    artifacts[a].display();
+  }
 }
 
 // setting up controls to move the Roller around the screen
