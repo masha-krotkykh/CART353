@@ -8,6 +8,7 @@ boolean rollLeft = false;
 boolean rollUp = false;
 boolean rollDown = false;
 
+
 Artifact[] artifacts = new Artifact[20];
 PImage[] artImages = new PImage[4]; 
 
@@ -51,7 +52,7 @@ void draw() {
   else {
     y = 0;
   }
-  
+
   PVector newVelocity = new PVector(x, y);
   roller.applyForce(newVelocity);
   newVelocity.mult(0);
@@ -79,7 +80,7 @@ void draw() {
   if (roller.location.y >= 50 && roller.location.y <= 200) {
     roller.applyForce(friction);
   }
-  
+
   // drawing rectangles to indicate "special" zones where forces will be applied
   noStroke();
   fill(0, 100, 150, 100);
@@ -95,11 +96,14 @@ void draw() {
   // looping through an array of artifacts and applying forces to them
   // checking edges, updating, and displaying artifacts
   for (int a = 0; a < artifacts.length; a++) {
-    PVector attract = roller.attract(artifacts[a]);
+    PVector attract = roller.attract(artifacts[a]).get();
     artifacts[a].applyForce(attract);
     artifacts[a].checkEdges();
     artifacts[a].update();
     artifacts[a].display();
+      if (artifacts[a].collide == true) {
+    println("collision!!!");
+  }
   }
 }
 

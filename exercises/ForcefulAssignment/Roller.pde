@@ -15,7 +15,7 @@ class Roller {
   float x = width / 4;
   float y = height - 50;
   float G;
-   
+  
   Roller() {
     //defining starting state for the Roller
     location = new PVector(x, y);
@@ -32,13 +32,14 @@ class Roller {
     PVector attract(Artifact artifact) {
     PVector attraction = PVector.sub(location, artifact.location);   // Calculate direction of force
     float d = attraction.mag();                              // Distance between objects
-    d = constrain(d, 0, 150);                        // Limiting the distance to eliminate "extreme" results for very close or very far objects
+    d = constrain(d, 1, 100);                        // Limiting the distance to eliminate "extreme" results for very close or very far objects
     attraction.normalize();                                  // Normalize vector (distance doesn't matter here, we just want this vector for direction)
-    float strength = (roller.G * mass * artifact.mass) / (d * d);      // Calculate gravitional force magnitude
+    float strength = (G * mass * artifact.mass) / (d * d);      // Calculate gravitional force magnitude
     attraction.mult(strength);                                  // Get force vector --> magnitude * direction
     return attraction;
   }
   
+
   void update() {
     // trapping the Roller inside the window
     location.y = constrain(location.y, size / 2, height - size / 2);
