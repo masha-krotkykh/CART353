@@ -1,53 +1,60 @@
 // class do define the main character
 class Hero {
-  int x;
-  int y;
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
   float vx;
   float vy;
   int hWidth = 40;
   int hHeight = 40;
   PImage hImage;
-  int speed;
+  float speed = 0.2;
   float gravity = 1;
   float mass;
+  int topSpeed = 5;
   
-  Hero(int tempX, int tempY) {
-    x = tempX;
-    y = tempY;
-    speed = 2;
+  Hero() {
+    location = new PVector(width/2, height - 50);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0,0);
     mass = 20;
   }
   
   void update() {
-    x += vx;
-    y += vy;
+    velocity.add(acceleration);
+    velocity.limit(topSpeed);
+    location.add(velocity);
+    acceleration.mult(0);
     
-    y = constrain(y, hWidth / 2, height - hWidth / 2);
-    x = constrain(x, hHeight / 2, width - hHeight / 2);
+    location.y = constrain(location.y, hWidth / 2, height - hWidth / 2);
+    location.x = constrain(location.x, hHeight / 2, width - hHeight / 2);
+
     
   if (right == true) {
-    vx = speed;
+    acceleration.x = speed;
   }
   else if (left == true) {
-    vx = -speed;
+    acceleration.x = -speed;
   }
   else {
-    vx = 0;
+    acceleration.x = 0;
+    velocity.x = 0;
   }
   if (up == true) {
-    vy = -speed;
+    acceleration.y = -speed;
   }
   else if (down == true) {
-    vy = speed;
+    acceleration.y = speed;
   } 
   else {
-    vy = 0;
+    acceleration.y = 0;
+    velocity.y = 0;
   }
  }
   
   void display() {
     noStroke();
     fill(155);
-    ellipse(x, y, hWidth, hHeight);
+    ellipse(location.x, location.y, hWidth, hHeight);
   }
 }

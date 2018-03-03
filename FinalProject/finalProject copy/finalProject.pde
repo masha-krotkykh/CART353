@@ -7,7 +7,7 @@ Hero hero;
 
 void setup() {
   size(800, 600);
-  hero = new Hero();
+  hero = new Hero(width/2, height - 50);
 }
 
 void draw() {
@@ -34,18 +34,16 @@ void keyPressed() {
 
 // making sure that the movement stops when the key is released
 void keyReleased() {
-  
-  
-  if (keyCode == LEFT && hero.acceleration.x < 0) {
+  if (keyCode == LEFT && hero.vx < 0) {
     left = false;
   } 
-  else if (keyCode == RIGHT && hero.acceleration.x > 0) {
+  else if (keyCode == RIGHT && hero.vx > 0) {
     right = false;
   }
-  if (keyCode == UP && hero.acceleration.y < 0) {
+  if (keyCode == UP && hero.vy < 0) {
     up = false;
   } 
-  else if (keyCode == DOWN && hero.acceleration.y > 0) {
+  else if (keyCode == DOWN && hero.vy > 0) {
     down = false;
   }
  } 
