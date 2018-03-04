@@ -10,7 +10,7 @@ class Bee {
   boolean collide = false;
  
   Bee() {
-    location = new PVector(width, 0);
+    location = new PVector(25, 25);
     velocity = new PVector(0, 0);
     // Limit the top speed
     topspeed = 5;
@@ -19,7 +19,6 @@ class Bee {
   void update() {
     // Random acceleration to immitate more organic movement
     acceleration = PVector.random2D();
-    
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);
