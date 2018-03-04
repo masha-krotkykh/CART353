@@ -12,22 +12,29 @@ class Hero {
   float gravity = 1;
   float mass;
   int topSpeed = 5;
+  int yOffset = height - 50;
   
   Hero() {
-    location = new PVector(width/2, height - 50);
+    location = new PVector(width/2, yOffset);
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
     mass = 20;
   }
   
+  void applyForce(PVector force) {
+    PVector f = force.get();
+    f.div(mass);
+    acceleration.add(f);
+  }
+  
   void update() {
     velocity.add(acceleration);
-    velocity.limit(topSpeed);
+    velocity.x = constrain(velocity.x, -5, 5);
     location.add(velocity);
     acceleration.mult(0);
     
-    location.y = constrain(location.y, hWidth / 2, height - hWidth / 2);
-    location.x = constrain(location.x, hHeight / 2, width - hHeight / 2);
+    location.y = constrain(location.y, hHeight / 2, yOffset);
+    location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
 
     
   if (right == true) {
@@ -41,7 +48,7 @@ class Hero {
     velocity.x = 0;
   }
   if (up == true) {
-    acceleration.y = -speed;
+    acceleration.y = -speed * 50;
   }
   else if (down == true) {
     acceleration.y = speed;
