@@ -6,11 +6,12 @@ class Bee {
   PVector acceleration;
   PVector dist;
   float topspeed;
-  int size = 15;
+  int size = 20;
   boolean collide = false;
+  PImage beeImg = loadImage("bee.png");
  
   Bee() {
-    location = new PVector(25, 25);
+    location = new PVector(hiveX, hiveY);
     velocity = new PVector(0, 0);
     // Limit the top speed
     topspeed = 5;
@@ -44,8 +45,7 @@ class Bee {
 
  // Display bees
   void display() {
-    noStroke();
-    fill(175);
-    ellipse(location.x, location.y, size, size);
+    imageMode(CENTER);
+    image(beeImg, location.x, location.y, size, size);
   }
 }

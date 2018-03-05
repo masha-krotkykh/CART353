@@ -36,16 +36,21 @@ class Hero {
     location.y = constrain(location.y, hHeight / 2, yOffset);
     location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
 
-  // Move when one of the arrow keys is pressed  
+  // Move when one of the arrow keys is pressed 
+  // Set the hero's location and frame sequences from the sprite to animate
+  blob.setXY(hero.location.x, hero.location.y);
   if (right == true) {
     acceleration.x = speed;
+    blob.setFrameSequence(7, 10, 0.3);
   }
   else if (left == true) {
     acceleration.x = -speed;
+    blob.setFrameSequence(3, 6, 0.3);
   }
   else {
     acceleration.x = 0;
     velocity.x = 0;
+    blob.setFrameSequence(0, 3, 0.7);
   }
   if (up == true) {
     acceleration.y = -speed * 50;
@@ -58,10 +63,4 @@ class Hero {
     velocity.y = 0;
   }
  }
-  
-  void display() {
-    noStroke();
-    fill(155);
-    ellipse(location.x, location.y, hWidth, hHeight);
-  }
 }
