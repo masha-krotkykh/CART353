@@ -1,4 +1,18 @@
 // Tamagotchi 2.0
+// The idea  behind Tamagotchi 2.0 is to create a virtual pet for those who are too busy to have a live one. 
+// Although this idea is not a new one, it deserves some attention and could be reworked a little bit to be 
+// suitable for adults  instead of children. 
+// The main concept is to create a selection of mini games to keep the virtual pet in a good mood and help it grow. 
+// The pet will also require feeding and attention to develop certain positive character traits; 
+// or, in case of neglect, it will develop negative character traits (violent behavior or, maybe, unhealthy eating habits?). 
+// The Tamagotchi will also have different appearance depending on how it is treated.
+// The Tamagotchi will be controlled by the arrow keys, the mini games will be activated from the menu, and the progress 
+// and current state (hunger level, boredom level) will be displayed at the top of the screen.
+// This ability to influence the development and growth of the virtual creature is aimed at creating a “special bond” 
+// between the user and the Tamagotchi that expands the usual gaming experience.
+// Since our lives become increasingly busy and free time more and more limited, I find this project worthy exploration because 
+// it can become a great stress reliever as well as virtual companion or toy to replace a real pet.
+
 import sprites.*;
 import sprites.maths.*;
 import sprites.utils.*;
@@ -15,10 +29,11 @@ PImage hiveImg;
 // We'll be using one object from the Hero class
 Hero hero;
 // Create a sprite for the hero
-
 Sprite blob;
 // and a StopWatch to keep track of time elapsed for sprite animation
 StopWatch timer = new StopWatch();;
+
+Stats stats;
 // And an array list of bees (so that we can target them individually when necessary)
 ArrayList<Bee> bees = new ArrayList<Bee>();
 
@@ -29,6 +44,7 @@ void setup() {
   hiveImg = loadImage("hive.png");
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
   blob = new Sprite(this, "blob.png", 4, 4, 0);
+  stats = new Stats();
 }
 
 void draw() {
@@ -51,6 +67,8 @@ void draw() {
   // update and display hero
   hero.update();
   //hero.display();
+  stats.update();
+  stats.display();
   
   // go through the array list of bees, check if they collide with hero, update and display them
   for (int b=0; b < bees.size(); b++) {
@@ -58,7 +76,7 @@ void draw() {
     bee.update();
     bee.display();
     bee.checkCollision(hero);
-  }  
+  }
 }
 
 // Check if any of control keys is pressed

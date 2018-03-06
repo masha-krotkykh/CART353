@@ -9,6 +9,7 @@ class Bee {
   int size = 20;
   boolean collide = false;
   PImage beeImg = loadImage("bee.png");
+    
  
   Bee() {
     location = new PVector(hiveX, hiveY);
@@ -39,7 +40,8 @@ class Bee {
     // If the objects collide, remove this instance of a bee from the array list
     if (distanceMag < minDistance) {
       bees.remove(this);
-      println("yum");
+      // every caught bee will increase the level of fullness
+      stats.fullness = stats.fullness + 1;
     }
   }
 

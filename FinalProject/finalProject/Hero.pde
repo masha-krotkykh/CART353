@@ -41,16 +41,16 @@ class Hero {
   blob.setXY(hero.location.x, hero.location.y);
   if (right == true) {
     acceleration.x = speed;
-    blob.setFrameSequence(7, 10, 0.3);
+    blob.setFrameSequence(7, 10, 0.2);
   }
   else if (left == true) {
     acceleration.x = -speed;
-    blob.setFrameSequence(3, 6, 0.3);
+    blob.setFrameSequence(3, 6, 0.2);
   }
   else {
     acceleration.x = 0;
     velocity.x = 0;
-    blob.setFrameSequence(0, 3, 0.7);
+    blob.setFrameSequence(0, 3, 0.5);
   }
   if (up == true) {
     acceleration.y = -speed * 50;
