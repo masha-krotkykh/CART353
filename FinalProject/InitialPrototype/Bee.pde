@@ -8,8 +8,7 @@ class Bee {
   float topspeed;
   int size = 20;
   boolean collide = false;
-  PImage beeImg = loadImage("bee.png");
-    
+  PImage beeImg = loadImage("bee.png");    
  
   Bee() {
     location = new PVector(hiveX, hiveY);
@@ -41,7 +40,7 @@ class Bee {
     if (distanceMag < minDistance) {
       bees.remove(this);
       // every caught bee will increase the level of fullness
-      stats.fullness = stats.fullness + 1;
+      stats.beesEaten = stats.beesEaten + 1;
     }
   }
 

@@ -39,6 +39,7 @@ ArrayList<Bee> bees = new ArrayList<Bee>();
 
 void setup() {
   size(800, 400);
+  
   // Create an instance of Hero
   hero = new Hero();
   hiveImg = loadImage("hive.png");
@@ -67,6 +68,9 @@ void draw() {
   // update and display hero
   hero.update();
   //hero.display();
+  // update, display, and save progress
+  stats.progress();
+  stats.saveProgress();
   stats.update();
   stats.display();
   

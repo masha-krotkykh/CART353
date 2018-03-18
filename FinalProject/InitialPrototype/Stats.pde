@@ -8,6 +8,23 @@ class Stats {
   int r;
   int g;
   int b;
+  int beesEaten = 0;
+  int level = 0;
+  int levelUp = 0;
+
+// Function to track current progress 
+// Every 10 bees lead to levelUp +1
+  void progress() {
+    if (beesEaten >= 10) {
+      levelUp = levelUp + beesEaten/10;
+      beesEaten = 0;
+    } 
+    // Every 10 levelUps lead to level +
+    if (levelUp >= 10) {
+      level = level + levelUp/10;
+      levelUp = 0;
+    }
+  }
   
   void update() {
     timeElapsed = (millis() - startTime) / 1000;
@@ -17,6 +34,7 @@ class Stats {
       startTime = millis();
       fullness = constrain(fullness, 0, 20);
     }
+    fullness = fullness + beesEaten;
     if (fullness >= 12) {
       r = 0;
       g = 255;
@@ -39,6 +57,17 @@ class Stats {
     fill(r,g,b,100);
     rectMode(CENTER);
     rect(width - 10, height / 2, 20, height);
-    println(fullness);
+    textAlign(CENTER);
+    text(levelUp, width / 2 - 20, 20);
+    text(level, width / 2 + 20, 20);
+    println(levelUp, level);
+  }
+ 
+  // Saving current stats into JSON object
+  void saveProgress() {
+    JSONObject currentStats = new JSONObject();
+    currentStats.setInt("currentLevelUp", levelUp);
+    currentStats.setInt("currentLevel", level);
+    saveJSONObject(currentStats, "data/stats.json");
   }
 }
