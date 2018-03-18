@@ -46,6 +46,7 @@ void setup() {
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
   blob = new Sprite(this, "blob.png", 4, 4, 0);
   stats = new Stats();
+  stats.loadProgress();
 }
 
 void draw() {
@@ -70,6 +71,7 @@ void draw() {
   //hero.display();
   // update, display, and save progress
   stats.progress();
+  
   stats.saveProgress();
   stats.update();
   stats.display();

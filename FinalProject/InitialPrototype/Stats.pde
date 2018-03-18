@@ -9,8 +9,8 @@ class Stats {
   int g;
   int b;
   int beesEaten = 0;
-  int level = 0;
-  int levelUp = 0;
+  int level;
+  int levelUp;
 
 // Function to track current progress 
 // Every 10 bees lead to levelUp +1
@@ -69,5 +69,12 @@ class Stats {
     currentStats.setInt("currentLevelUp", levelUp);
     currentStats.setInt("currentLevel", level);
     saveJSONObject(currentStats, "data/stats.json");
+  }
+  
+  // Function to load saved progress from JSON file
+  void loadProgress() {
+    JSONObject savedStats = loadJSONObject("data/stats.json");
+    levelUp = savedStats.getInt("currentLevelUp"); 
+    level = savedStats.getInt("currentLevel");
   }
 }
