@@ -17,43 +17,51 @@ import sprites.*;
 import sprites.maths.*;
 import sprites.utils.*;
 
+// By default none of controll keys are pressed
 boolean right = false;
 boolean left = false;
 boolean up = false;
 boolean down = false;
+
+// Variables for hive size and location
 int hiveX = 40;
 int hiveY = 40;
 int hiveSize = 80;
 PImage hiveImg;
+String currentSprite;
 
-int state = 0;
+// By default start with the main screen
+int state = 1;
 
 // JSON file that will be created as soon as any progress is made
 File progress;
 
 // We'll be using one object from the Hero class
 Hero hero;
-// UI to display different screens and stats to keep track of progress
-UI ui;
-Stats stats;
 // Create a sprite for the hero
-Sprite blob;
+Sprite evolution;
 // and a StopWatch to keep track of time elapsed for sprite animation
 StopWatch timer = new StopWatch();
-
+// One instance of UI, stats, and each mini-game
+UI ui;
+Stats stats;
+Snek snek;
 // And an array list of bees (so that we can target them individually when necessary)
 ArrayList<Bee> bees = new ArrayList<Bee>();
 
 void setup() {
   size(800, 400);
+  stats = new Stats();
+  ui = new UI();
+  snek = new Snek();
+  // By default at the beginning hero is in its "blob" state
+  currentSprite = "blob.png";
   
   // Create an instance of Hero
   hero = new Hero();
   hiveImg = loadImage("hive.png");
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
-  blob = new Sprite(this, "blob.png", 4, 4, 0);
-  stats = new Stats();
-  ui = new UI();
+  evolution = new Sprite(this, currentSprite, 4, 4, 0);
   // Check if the file with current progress exists
   // if it does, load progress from the file
   progress = new File(dataPath("stats.json"));
@@ -62,44 +70,34 @@ void setup() {
   }
 }
 
+
 void draw() {
   // Display the current screen according to the game stage
-  if(state == 0) {
-    ui.startScreen();
+  
+  // mainScreen is the stage where Tamagotch lives
+  if(state == 1) {
+    mainScreen();
   }
-
   // gamesScreen displays when user wants to play a game
   else if(state == 2) {
     ui.gamesScreen();
   }
-  
-  //else if(state == 21) {
-  //  stats.cannonScreen();
-  //}
+    
+  else if(state == 21) {
+    ui.snakeScreen();
+  }
   
   //else if(state == 22) {
-  //  stats.snakeScreen();
+  //  stats.cannonScreen();
   //}
-  
+
   //else if(state == 23) {
   //  stats.shuffleScreen();
   //}
-  
-  // mainScreen is the stage where Tamagotch lives
-  else if(state == 1) {
-    mainScreen();
-  }
 }
 
-// All game code is now inside gameScreen() function so it only gets called when the mouse is clicked from
-// the startScreen or the endScreen
-void mainScreen() {
-  
-  if (key == 'p') {
-    state = 2;
-  }
-  
-  
+
+void mainScreen() {  
   background(255);
   // Draw a bee hive
   imageMode(CENTER);
@@ -113,17 +111,17 @@ void mainScreen() {
   S4P.drawSprites();
   
   // Apply gravity to the hero so that he doesn't float when jumps up
-  PVector gravity = new PVector(0, 100);
+  PVector gravity = new PVector(0, 150);
   hero.applyForce(gravity);
-  
-  // update and display hero
-  hero.update();
-  //hero.display();
-  // update, display, and save progress 
+
+  // update, display, and save progress
   stats.progress();
   stats.saveProgress();
   stats.update();
   stats.display();
+    
+  // update and display hero
+  hero.update();
   
   // go through the array list of bees, check if they collide with hero, update and display them
   for (int b=0; b < bees.size(); b++) {
@@ -131,6 +129,10 @@ void mainScreen() {
     bee.update();
     bee.display();
     bee.checkCollision(hero);
+  }
+  
+  if (key == 'p') {
+    state = 2;
   }
 }
 
@@ -160,7 +162,7 @@ void keyReleased() {
   }
   if (keyCode == UP && hero.acceleration.y < 0) {
     up = false;
- 
+    
   } 
   else if (keyCode == DOWN && hero.acceleration.y > 0) {
     down = false;

@@ -10,14 +10,16 @@ class Bee {
   boolean collide = false;
   PImage beeImg = loadImage("bee.png");    
  
+ // Construct a bee, where it will originate and limit its top speed 
   Bee() {
     location = new PVector(hiveX, hiveY);
     velocity = new PVector(0, 0);
     // Limit the top speed
-    topspeed = 5;
+    topspeed = 7;
   }
  
   void update() {
+    // Update position by velocity and velocity bu=y acceleration
     // Random acceleration to immitate more organic movement
     acceleration = PVector.random2D();
     velocity.add(acceleration);

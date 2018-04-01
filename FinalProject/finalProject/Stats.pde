@@ -1,15 +1,17 @@
 // class to register statistics
 class Stats {
+  // Colours for stat bars 
   int rh = 0;
   int gh = 0;
   int bh = 0;
   int rb = 0;
   int gb = 0;
   int bb = 0;
+  // Current progress
   int beesEaten = 0;
-  int gameWon = 0;
-  int level;
+  int level = 0;
   int levelUp;
+
 
 // Function to track current progress 
 // Every 10 bees lead to levelUp +1
@@ -18,6 +20,7 @@ class Stats {
       levelUp = levelUp + beesEaten/10;
       beesEaten = 0;
     } 
+
     // Every 10 levelUps lead to level +
     if (levelUp >= 10) {
       level = level + levelUp/10;
@@ -26,7 +29,7 @@ class Stats {
   }
   
   void update() {
-
+    // Colour of stat bars depending on hunger and boredom levels
     if (hero.fullness >= 12) {
       rh = 0;
       gh = 255;
@@ -61,6 +64,7 @@ class Stats {
   }
   
   void display() {
+    // Display stats bars
     noStroke();
     fill(rh,gh,bh,100);
     rectMode(CENTER);
@@ -74,7 +78,6 @@ class Stats {
     textAlign(CENTER);
     text(levelUp, width / 2 - 20, 20);
     text(level, width / 2 + 20, 20);
-    println(state);
   }
  
   // Saving current stats into JSON object
