@@ -6,12 +6,12 @@ class UI {
   void gamesScreen() {
     background(0);
     textAlign(CENTER);
-    text("1. <s> Snake  2. <c> Cannon 3. <w> Shuffle 4. <0> Home", width/2, height/2);
+    text("1. <s> Snake  2. <b> Bubbles 3. <w> Shuffle 4. <0> Home", width/2, height/2);
     // Keys to press to pick a specific game
     if(key == 's') {
       state = 21;
     }
-    else if(key == 'c') {
+    else if(key == 'b') {
       state = 22;
     }
     else if(key == 'w') {
@@ -26,5 +26,12 @@ class UI {
   void snakeScreen() {
     snek.draw();
     snek.keyPressed();
+  }
+  
+  void bubblesScreen() {
+    bubbles.draw();
+    bubbles.updatePaddle();
+    bubbles.keyPressed();
+    bubbles.handleEndGame();
   }
 }

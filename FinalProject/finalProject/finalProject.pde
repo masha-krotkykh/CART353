@@ -46,6 +46,7 @@ StopWatch timer = new StopWatch();
 UI ui;
 Stats stats;
 Snek snek;
+Bubbles bubbles;
 // And an array list of bees (so that we can target them individually when necessary)
 ArrayList<Bee> bees = new ArrayList<Bee>();
 
@@ -54,6 +55,7 @@ void setup() {
   stats = new Stats();
   ui = new UI();
   snek = new Snek();
+  bubbles = new Bubbles();
   
   // Create an instance of Hero
   hero = new Hero();
@@ -85,9 +87,9 @@ void draw() {
     ui.snakeScreen();
   }
   
-  //else if(state == 22) {
-  //  stats.cannonScreen();
-  //}
+  else if(state == 22) {
+    ui.bubblesScreen();
+  }
 
   //else if(state == 23) {
   //  stats.shuffleScreen();
