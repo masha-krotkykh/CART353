@@ -9,7 +9,7 @@ class Hero {
   float speed = 0.2;
   float mass;
   // An offset so that Hero doesn't touch r=the bottom edge
-  int yOffset = height - 30;
+  int yOffset = height - 50;
   // variables to determine hero's state
   int fullness = 20;
   int joy = 20;
@@ -29,7 +29,7 @@ class Hero {
     location = new PVector(width/2, yOffset);
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
-    mass = 20;
+    mass = 30;
   }
   
   // Model gravity so that the hero gets back down after a jump
@@ -66,6 +66,9 @@ class Hero {
     else if (stats.level >=2 && stats.level < 3) {
       growth = 48;
     }
+    else if (stats.level >= 3 ) {
+      growth = 72;
+    }
 
 
     // Move when one of the arrow keys is pressed 
@@ -85,7 +88,7 @@ class Hero {
       evolution.setFrameSequence(growth + mood + 0, growth + mood + 3, 0.3);
     }
     if (up == true) {
-      acceleration.y = -speed * 50;
+      acceleration.y = -speed * 30;
     }
     else if (down == true) {
       acceleration.y = speed;
@@ -118,6 +121,5 @@ class Hero {
     if (joy < 20) { 
       joy = joy + stats.gamesWon;
     }
-    println(joy);
   }
 }
