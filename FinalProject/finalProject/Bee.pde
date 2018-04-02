@@ -27,7 +27,7 @@ class Bee {
     location.add(velocity);
     // Constrain location within window
     location.x = constrain(location.x, 0, width);
-    location.y = constrain(location.y, 0, hero.yOffset);
+    location.y = constrain(location.y, 20, hero.yOffset);
   }
   
   // Check for collision with the Hero

@@ -54,14 +54,12 @@ void setup() {
   stats = new Stats();
   ui = new UI();
   snek = new Snek();
-  // By default at the beginning hero is in its "blob" state
-  currentSprite = "blob.png";
   
   // Create an instance of Hero
   hero = new Hero();
   hiveImg = loadImage("hive.png");
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
-  evolution = new Sprite(this, currentSprite, 4, 4, 0);
+  evolution = new Sprite(this, "blob.png", 12, 4, 0);
   // Check if the file with current progress exists
   // if it does, load progress from the file
   progress = new File(dataPath("stats.json"));

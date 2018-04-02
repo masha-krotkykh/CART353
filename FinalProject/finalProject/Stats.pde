@@ -11,6 +11,7 @@ class Stats {
   int beesEaten = 0;
   int level = 0;
   int levelUp;
+  int gamesWon;
 
 
 // Function to track current progress 
@@ -61,6 +62,7 @@ class Stats {
       gb = 0;
       bb = 0;
     }
+    gamesWon = snek.total;
   }
   
   void display() {
@@ -85,6 +87,8 @@ class Stats {
     JSONObject currentStats = new JSONObject();
     currentStats.setInt("currentLevelUp", levelUp);
     currentStats.setInt("currentLevel", level);
+    currentStats.setInt("currentFullness", hero.fullness);
+    currentStats.setInt("currentJoy", hero.joy);
     saveJSONObject(currentStats, "data/stats.json");
   }
   
@@ -93,5 +97,7 @@ class Stats {
     JSONObject savedStats = loadJSONObject("data/stats.json");
     levelUp = savedStats.getInt("currentLevelUp"); 
     level = savedStats.getInt("currentLevel");
+    hero.fullness = savedStats.getInt("currentFullness");
+    hero.joy = savedStats.getInt("currentJoy");
   }
 }

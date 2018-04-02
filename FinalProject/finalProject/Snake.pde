@@ -18,6 +18,7 @@ class Snake {
     float d = dist(x, y, pos.x, pos.y);
     if (d < snek.size) {
       snek.total++;
+      hero.joy++;
       return true;
     } 
     // otherwise return false
