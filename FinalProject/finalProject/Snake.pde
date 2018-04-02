@@ -13,7 +13,7 @@ class Snake {
   }
 
   // Check collision
-  // If snake touches target, return value of true
+  // If snake touches target, return value of true, increase the snake size and increase hero's joy level
   boolean eat(PVector pos) {
     float d = dist(x, y, pos.x, pos.y);
     if (d < snek.size) {

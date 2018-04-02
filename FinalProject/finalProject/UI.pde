@@ -30,7 +30,6 @@ class UI {
   
   void bubblesScreen() {
     bubbles.draw();
-    bubbles.updatePaddle();
     bubbles.keyPressed();
     bubbles.handleEndGame();
   }

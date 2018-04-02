@@ -51,12 +51,11 @@ class Hero {
     location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
     
     // If hero is sad or hungry, his avatar will be changed to an evil doppelganger
-    if (joy < 6 || fullness < 6) {
-      // switching to the second row of the sprite sheet
+    if (joy < 10 || fullness < 10) {
       mood = 12;
     }
     else mood = 0;
-    
+    // switching to the corresponding row of the sprite sheet depending on hero's current state and age
     if (stats.level < 1) {
       growth = 0;
     }
@@ -69,7 +68,6 @@ class Hero {
     else if (stats.level >= 3 ) {
       growth = 72;
     }
-
 
     // Move when one of the arrow keys is pressed 
     // Set the hero's location and frame sequences from the sprite to animate
@@ -107,9 +105,7 @@ class Hero {
       eatTime = millis();
       fullness = constrain(fullness, 0, 20);
     }
-    if (fullness < 20) { 
-      fullness = fullness + stats.beesEaten;
-    }
+
     // Countdown for the hero to get bored
     lastPlayed = (millis() - playTime) / 1000;
     bored = 20 - lastPlayed;
@@ -118,8 +114,14 @@ class Hero {
       playTime = millis();
       joy = constrain(joy, 0, 20);
     }
-    if (joy < 20) { 
-      joy = joy + stats.gamesWon;
-    }
+    println(fullness, joy);
   }
+  
+
+
+ 
+  //if (joy < 20) { 
+  //    joy = joy + stats.gamesWon;
+  //  }
+  //}
 }
