@@ -46,7 +46,7 @@ class Bubbles {
       // If collision is detected remove this aim from the arrayList
       if ((aim.x + aim.w / 2 > ball.ballX - ball.ballSize / 2) && (aim.x - aim.w / 2 < ball.ballX + ball.ballSize / 2) && (aim.y + aim.w / 2 > ball.ballY - ball.ballSize / 2) && (aim.y - aim.w / 2 < ball.ballY + ball.ballSize / 2)) {
       aims.remove(i);
-      // and 1 point of joy is added
+      // and 300 points of joy are added
       hero.joy = hero.joy + 300;
       }
     }

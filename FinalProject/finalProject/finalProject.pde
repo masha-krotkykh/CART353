@@ -23,12 +23,19 @@ boolean left = false;
 boolean up = false;
 boolean down = false;
 
-// Variables for hive size and location
+// Variables for hive and stone size and location
 int hiveX = 40;
 int hiveY = 40;
 int hiveSize = 80;
 float hiveRot;
 PImage hiveImg;
+
+int stoneX = width - 40;
+int stoneY = height - 40;
+int stoneSize = 80;
+float stoneRot;
+PImage stoneImg;
+
 String currentSprite;
 
 // By default start with the main screen
@@ -50,6 +57,7 @@ Snek snek;
 Bubbles bubbles;
 // And an array list of bees (so that we can target them individually when necessary)
 ArrayList<Bee> bees = new ArrayList<Bee>();
+ArrayList<Scorpio> scorpios = new ArrayList<Scorpio>();
 
 void setup() {
   size(800, 400);
@@ -61,6 +69,7 @@ void setup() {
   // Create an instance of Hero
   hero = new Hero();
   hiveImg = loadImage("hive.png");
+  stoneImg = loadImage("stone.png");
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
   evolution = new Sprite(this, "blob.png", 12, 8, 0);
   // Check if the file with current progress exists
@@ -100,13 +109,20 @@ void draw() {
 
 void mainScreen() {  
   background(255);
-  // Draw a bee hive
+  // Draw a bee hive and stone
   pushMatrix();
   translate(hiveSize/2,0);
   imageMode(CENTER);
   rotate(hiveRot);
   image(hiveImg, hiveX - hiveSize/2, hiveY, hiveSize, hiveSize);
   popMatrix();
+  
+  pushMatrix();
+  translate(stoneSize/2, stoneSize);
+  imageMode(CENTER);
+  rotate(0.2);
+  popMatrix();
+  image(stoneImg, width - stoneX + stoneSize/2, height - stoneY + stoneSize/2, stoneSize, stoneSize);
 
   // We get the time elapsed since the last frame (the deltaTime)
   double deltaTime = timer.getElapsedTime();
@@ -129,11 +145,19 @@ void mainScreen() {
   hero.update();
   
   // go through the array list of bees, check if they collide with hero, update and display them
-  for (int b=0; b < bees.size(); b++) {
-    Bee bee = (Bee)bees.get(b);
+  for (int b = 0; b < bees.size(); b++) {
+    Food bee = (Bee)bees.get(b);
     bee.update();
     bee.display();
     bee.checkCollision(hero);
+  }
+  
+   // go through the array list of scorpios, check if they collide with hero, update and display them
+  for (int s = 0; s < scorpios.size(); s++) {
+    Food scorpio = (Scorpio)scorpios.get(s);
+    scorpio.update();
+    scorpio.display();
+    scorpio.checkCollision(hero);
   }
   
   if (key == 'p') {
@@ -159,17 +183,33 @@ void keyPressed() {
 
 // making sure that the movement stops when the key is released
 void keyReleased() {
+  //if (keyCode == LEFT && hero.acceleration.x < 0) {
     left = false;
     right = false;
     down = false;
     up = false;
+  //} 
+  //else if (keyCode == RIGHT && hero.acceleration.x > 0) {
+  //  right = false;
+  //  left = false;
+  //}
+  //if (keyCode == UP && hero.acceleration.y < 0) {
+  //  up = false;
+    
+  //} 
+  //else if (keyCode == DOWN && hero.acceleration.y > 0) {
+  //  down = false;
+  //}
  } 
 
 // When hive is clicked bees are spawnd. Can only work when there are no other bees on screen  
 void mousePressed() {
   if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
     hiveRot = random(-0.2, 0.2);
-  }  
+  } 
+  else if (dist(mouseX, mouseY, width, height) < stoneSize/2) {
+    stoneRot = random(-0.2, 0.2);
+  }
 }
 
 void mouseReleased() {
@@ -180,5 +220,13 @@ void mouseReleased() {
       }
     }
     hiveRot = 0;
+  }
+  else if (dist(mouseX, mouseY, width, height) < stoneSize/2) {
+    if (scorpios.size() == 0) {
+      for(int s = 0; s < 10; s++) {
+        scorpios.add(new Scorpio());
+      }
+    }
+    stoneRot = 0;
   }
 }

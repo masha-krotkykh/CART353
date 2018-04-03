@@ -1,15 +1,15 @@
 // Bee class. Bees will be food for the Hero
-class Bee extends Food {
+class Scorpio extends Food {
  // Define main properties 
-  PImage beeImg = loadImage("bee.png");    
+  PImage scorpioImg = loadImage("scorpio.png");    
  
  // Construct a bee, where it will originate and limit its top speed 
-  Bee() {
-    location = new PVector(hiveX, hiveY);
+  Scorpio() {
+    location = new PVector(stoneX, stoneY);
     velocity = new PVector(0, 0);
     // Limit the top speed
-    topspeed = 7;
-    foodImg = beeImg;
+    topspeed = 10;
+    foodImg = scorpioImg;
   }
  
   void update() {
@@ -25,7 +25,7 @@ class Bee extends Food {
     super.checkCollision(hero);
     // Remove bee from an arrayList if it's been eaten
     if (isDead == true) {
-      bees.remove(this);
+      scorpios.remove(this);
     }
   }
 }

@@ -8,7 +8,7 @@ class Stats {
   int gb = 0;
   int bb = 0;
   // Current progress
-  int beesEaten = 0;
+  int foodEaten = 0;
   int level = 0;
   int levelUp;
   int gamesWon;
@@ -17,9 +17,9 @@ class Stats {
 // Function to track current progress 
 // Every 10 bees lead to levelUp +1
   void progress() {
-    if (beesEaten >= 10) {
-      levelUp = levelUp + beesEaten/10;
-      beesEaten = 0;
+    if (foodEaten >= 10) {
+      levelUp = levelUp + foodEaten/10;
+      foodEaten = 0;
     } 
 
     // Every 10 levelUps lead to level +
