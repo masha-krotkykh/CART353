@@ -1,4 +1,5 @@
 // Main class for bubble game
+// based on pong game from CART253 class
 
 class Bubbles {
   color backgroundColor = color(0);
