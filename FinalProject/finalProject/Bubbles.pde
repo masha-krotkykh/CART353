@@ -6,7 +6,10 @@ class Bubbles {
   boolean right = false;
   boolean left = false;
   ArrayList<Aim> aims;
-  int aimSize = 32;
+  int aimSize = 60;
+  int level = 1;
+  int aimNumber = 2;
+  int currentSize = 60;
   
   // Instance of paddle and ball
   Paddle paddle;
@@ -18,11 +21,10 @@ class Bubbles {
     paddle.setupPaddle();
     ball = new Ball();
     ball.setupBall();
-    
     // An arrayList of bubbles to hit
     aims = new ArrayList<Aim>();
-    for (int a = 0; a < 25; a++) {
-      aims.add(new Aim((aimSize/2 + aimSize*a), random(aimSize/2, height/2), 32));
+    for (int a = 0; a < aimNumber; a++) {
+      aims.add(new Aim(random(currentSize/2, width - currentSize/2), random(currentSize/2, height/2), currentSize));
     }
   }
  
@@ -43,9 +45,11 @@ class Bubbles {
       // If collision is detected remove this aim from the arrayList
       if ((aim.x + aim.w / 2 > ball.ballX - ball.ballSize / 2) && (aim.x - aim.w / 2 < ball.ballX + ball.ballSize / 2) && (aim.y + aim.w / 2 > ball.ballY - ball.ballSize / 2) && (aim.y - aim.w / 2 < ball.ballY + ball.ballSize / 2)) {
       aims.remove(i);
+      // and 1 point of joy is added
+      hero.joy = hero.joy + 300;
       }
     }
-    
+
     paddle.updatePaddle();
     ball.updateBall();
     paddle.drawPaddle();
@@ -53,14 +57,28 @@ class Bubbles {
     ball.handleBallHitPaddle(paddle);
   }
   
-    // When all lives are used return to the main game menu, stop paddle and reset number of lives back to 5
   void handleEndGame() {
+    // If all bubbles are popped, new level starts
+    // number of bubbles increases, level number increases, bubble size decreases.
+    if (aims.size() <= 0) {
+      level = level + 1;
+      aimNumber = aimNumber + 3;
+      currentSize = currentSize - 5;
+      for (int a = 0; a < aimNumber; a++) {
+        aims.add(new Aim(random(currentSize/2, width - currentSize/2), random(currentSize/2, height/2), currentSize));
+      }
+    }
+    // When all lives are used return to the main game menu, stop paddle and reset number of lives back to 5, as well as bubble size and bubble quantity
     if (lives <= 0) {
       lives = 5;
-      left = false;
-      right = false;
-      paddle.paddleVX = 0;
+      level = 0;
+      aimNumber = 2;
+      currentSize = 60;
       state = 2;
+      //paddle.paddleSpeed = 0;
+      //paddle.paddleVX = 0;
+      //right = false;
+      //left = false;
     }
   }
   

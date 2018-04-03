@@ -43,7 +43,7 @@ class Bee {
       bees.remove(this);
       // every caught bee will increase the level of fullness
       stats.beesEaten = stats.beesEaten + 1;
-      hero.fullness = hero.fullness + 1;
+      hero.fullness = hero.fullness + 300;
     }
   }
 

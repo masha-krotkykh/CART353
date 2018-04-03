@@ -31,12 +31,12 @@ class Stats {
   
   void update() {
     // Colour of stat bars depending on hunger and boredom levels
-    if (hero.fullness >= 12) {
+    if (hero.fullness >= 14000) {
       rh = 0;
       gh = 255;
       bh = 0;
     }
-    else if (hero.fullness >= 6) {
+    else if (hero.fullness >= 7000) {
       rh = 255;
       gh = 255;
       bh = 0;
@@ -47,12 +47,12 @@ class Stats {
       bh = 0;
     }
     
-    if (hero.joy >= 12) {
+    if (hero.joy >= 18000) {
       rb = 0;
       gb = 255;
       bb = 0;
     }
-    else if (hero.joy >= 6) {
+    else if (hero.joy >= 9000) {
       rb = 255;
       gb = 255;
       bb = 0;
@@ -62,7 +62,6 @@ class Stats {
       gb = 0;
       bb = 0;
     }
-    gamesWon = snek.total;
   }
   
   void display() {

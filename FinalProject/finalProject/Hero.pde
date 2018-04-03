@@ -11,14 +11,11 @@ class Hero {
   // An offset so that Hero doesn't touch r=the bottom edge
   int yOffset = height - 50;
   // variables to determine hero's state
-  int fullness = 20;
-  int joy = 20;
-  int eatTime = 0;
-  int playTime = 0;
-  int lastPlayed;
-  int lastFed;
-  int hungry = 10;
-  int bored = 5;
+  int maxFullness = 21000;
+  int maxJoy = 27000;
+  int fullness;
+  int joy;
+
   //depending on hero's current condition his avatar will be either good or bad 
   int mood = 0;
   //depending on current level avatar will grow
@@ -30,6 +27,8 @@ class Hero {
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
     mass = 30;
+    fullness = maxFullness;
+    joy = maxJoy;
   }
   
   // Model gravity so that the hero gets back down after a jump
@@ -51,11 +50,11 @@ class Hero {
     location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
     
     // If hero is sad or hungry, his avatar will be changed to an evil doppelganger
-    if (joy < 10 || fullness < 10) {
+    if (joy < maxJoy / 2) {
       mood = 12;
     }
     else mood = 0;
-    // switching to the corresponding row of the sprite sheet depending on hero's current state and age
+    // switching to the corresponding row of the sprite sheet depending on hero's current joy level and age
     if (stats.level < 1) {
       growth = 0;
     }
@@ -68,6 +67,13 @@ class Hero {
     else if (stats.level >= 3 ) {
       growth = 72;
     }
+    
+    // Hero gets hungrier and sadder over time
+    fullness--;
+    joy--;
+    
+    fullness = constrain(fullness, 0, maxFullness);
+    joy = constrain(joy, 0, maxJoy);
 
     // Move when one of the arrow keys is pressed 
     // Set the hero's location and frame sequences from the sprite to animate
@@ -95,33 +101,7 @@ class Hero {
       acceleration.y = 0;
       velocity.y = 0;
     }
-    
-    // Countdown for the hero to get hungry
-    // every 10 seconds he gets 1 point hungrier
-    lastFed = (millis() - eatTime) / 1000;
-    hungry = 10 - lastFed;
-    if (hungry <= 0) {
-      fullness = fullness - 1;
-      eatTime = millis();
-      fullness = constrain(fullness, 0, 20);
-    }
 
-    // Countdown for the hero to get bored
-    lastPlayed = (millis() - playTime) / 1000;
-    bored = 20 - lastPlayed;
-    if (bored <= 0) {
-      joy = joy - 1;
-      playTime = millis();
-      joy = constrain(joy, 0, 20);
-    }
     println(fullness, joy);
   }
-  
-
-
- 
-  //if (joy < 20) { 
-  //    joy = joy + stats.gamesWon;
-  //  }
-  //}
 }
