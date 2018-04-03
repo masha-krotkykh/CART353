@@ -76,10 +76,6 @@ class Bubbles {
       aimNumber = 2;
       currentSize = 60;
       state = 2;
-      //paddle.paddleSpeed = 0;
-      //paddle.paddleVX = 0;
-      //right = false;
-      //left = false;
     }
   }
   

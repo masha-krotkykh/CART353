@@ -27,6 +27,7 @@ boolean down = false;
 int hiveX = 40;
 int hiveY = 40;
 int hiveSize = 80;
+float hiveRot;
 PImage hiveImg;
 String currentSprite;
 
@@ -100,9 +101,13 @@ void draw() {
 void mainScreen() {  
   background(255);
   // Draw a bee hive
+  pushMatrix();
+  translate(hiveSize/2,0);
   imageMode(CENTER);
-  image(hiveImg, hiveX, hiveY, hiveSize, hiveSize);
-  
+  rotate(hiveRot);
+  image(hiveImg, hiveX - hiveSize/2, hiveY, hiveSize, hiveSize);
+  popMatrix();
+
   // We get the time elapsed since the last frame (the deltaTime)
   double deltaTime = timer.getElapsedTime();
   // We update the sprites in the program based on that delta
@@ -154,26 +159,26 @@ void keyPressed() {
 
 // making sure that the movement stops when the key is released
 void keyReleased() {
-  if (keyCode == LEFT && hero.acceleration.x < 0) {
     left = false;
-  } 
-  else if (keyCode == RIGHT && hero.acceleration.x > 0) {
     right = false;
-  }
-  if (keyCode == UP && hero.acceleration.y < 0) {
-    up = false;
-    
-  } 
-  else if (keyCode == DOWN && hero.acceleration.y > 0) {
     down = false;
-  }
+    up = false;
  } 
 
 // When hive is clicked bees are spawnd. Can only work when there are no other bees on screen  
 void mousePressed() {
-  if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2 && bees.size() == 0) {
-    for(int b = 0; b < 10; b++) {
-      bees.add(new Bee());
+  if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
+    hiveRot = random(-0.2, 0.2);
+  }  
+}
+
+void mouseReleased() {
+  if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
+    if (bees.size() == 0) {
+      for(int b = 0; b < 10; b++) {
+        bees.add(new Bee());
+      }
     }
+    hiveRot = 0;
   }
 }
