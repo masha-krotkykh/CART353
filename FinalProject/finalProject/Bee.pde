@@ -1,7 +1,8 @@
 // Bee class. Bees will be food for the Hero
 class Bee extends Food {
  // Define main properties 
-  PImage beeImg = loadImage("bee.png");    
+  PImage beeImg = loadImage("bee.png");  
+  
  
  // Construct a bee, where it will originate and limit its top speed 
   Bee() {
@@ -10,13 +11,14 @@ class Bee extends Food {
     // Limit the top speed
     topspeed = 7;
     foodImg = beeImg;
+    size = 20;
   }
  
   void update() {
     // Call update from super class Food
     super.update();
     // Constrain location within window
-    location.x = constrain(location.x, 0, width);
+    location.x = constrain(location.x, size/2, width - size/2);
     location.y = constrain(location.y, 20, hero.yOffset);
   }
   

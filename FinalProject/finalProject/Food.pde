@@ -6,7 +6,7 @@ class Food {
   PVector acceleration;
   PVector dist;
   float topspeed;
-  int size = 20;
+  int size;
   boolean collide = false;  
   PImage foodImg;
   boolean isDead = false;

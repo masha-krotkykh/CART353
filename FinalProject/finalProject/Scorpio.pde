@@ -8,16 +8,20 @@ class Scorpio extends Food {
     location = new PVector(stoneX, stoneY);
     velocity = new PVector(0, 0);
     // Limit the top speed
-    topspeed = 10;
+    topspeed = 4;
     foodImg = scorpioImg;
+    size = 30;
   }
  
   void update() {
     // Call update from super class Food
     super.update();
     // Constrain location within window
-    location.x = constrain(location.x, 0, width);
-    location.y = constrain(location.y, 20, hero.yOffset);
+    //location.x = constrain(location.x, size/2, width - size/2);
+    location.y = constrain(location.y, hero.yOffset, height - size/2);
+    if (location.x >= width || location.x <= 0) {
+      velocity.x = -velocity.x;
+    }
   }
   
   // Check for collision with the Hero

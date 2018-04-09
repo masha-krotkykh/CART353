@@ -16,6 +16,10 @@
 import sprites.*;
 import sprites.maths.*;
 import sprites.utils.*;
+PImage bgImg;
+PImage bgNormal;
+PImage bgAngry;
+PImage bgDirty;
 
 // By default none of controll keys are pressed
 boolean right = false;
@@ -30,10 +34,11 @@ int hiveSize = 80;
 float hiveRot;
 PImage hiveImg;
 
-int stoneX = width - 40;
-int stoneY = height - 40;
-int stoneSize = 80;
-float stoneRot;
+int stoneWidth = 100;
+int stoneHeight = stoneWidth/2;
+int stoneX = 750;
+int stoneY = 375;
+float stoneLift;
 PImage stoneImg;
 
 String currentSprite;
@@ -70,6 +75,10 @@ void setup() {
   hero = new Hero();
   hiveImg = loadImage("hive.png");
   stoneImg = loadImage("stone.png");
+  bgNormal = loadImage("bg_normal.jpg");
+  bgAngry = loadImage("bg_angry.jpg");
+  bgDirty = loadImage("bg_dirty.jpg");
+  
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
   evolution = new Sprite(this, "blob.png", 12, 8, 0);
   // Check if the file with current progress exists
@@ -108,21 +117,24 @@ void draw() {
 
 
 void mainScreen() {  
-  background(255);
+  if(hero.heroState == 0) {
+    bgImg = bgNormal;
+  }
+  if(hero.heroState == 12) {
+    bgImg = bgAngry;
+  }
+  background(bgImg);
   // Draw a bee hive and stone
+  
+  imageMode(CENTER);
+  image(stoneImg, stoneX, stoneY + stoneLift, stoneWidth, stoneHeight);
+  
   pushMatrix();
   translate(hiveSize/2,0);
   imageMode(CENTER);
   rotate(hiveRot);
   image(hiveImg, hiveX - hiveSize/2, hiveY, hiveSize, hiveSize);
   popMatrix();
-  
-  pushMatrix();
-  translate(stoneSize/2, stoneSize);
-  imageMode(CENTER);
-  rotate(0.2);
-  popMatrix();
-  image(stoneImg, width - stoneX + stoneSize/2, height - stoneY + stoneSize/2, stoneSize, stoneSize);
 
   // We get the time elapsed since the last frame (the deltaTime)
   double deltaTime = timer.getElapsedTime();
@@ -183,35 +195,23 @@ void keyPressed() {
 
 // making sure that the movement stops when the key is released
 void keyReleased() {
-  //if (keyCode == LEFT && hero.acceleration.x < 0) {
     left = false;
     right = false;
     down = false;
     up = false;
-  //} 
-  //else if (keyCode == RIGHT && hero.acceleration.x > 0) {
-  //  right = false;
-  //  left = false;
-  //}
-  //if (keyCode == UP && hero.acceleration.y < 0) {
-  //  up = false;
-    
-  //} 
-  //else if (keyCode == DOWN && hero.acceleration.y > 0) {
-  //  down = false;
-  //}
  } 
 
-// When hive is clicked bees are spawnd. Can only work when there are no other bees on screen  
+// When hive is clicked it rotates slightly 
 void mousePressed() {
   if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
     hiveRot = random(-0.2, 0.2);
   } 
-  else if (dist(mouseX, mouseY, width, height) < stoneSize/2) {
-    stoneRot = random(-0.2, 0.2);
+  // when the rock is clicked it lifts up
+  else if (dist(mouseX, mouseY, stoneX, stoneY) < stoneHeight) {
+    stoneLift = -10;
   }
 }
-
+// When mouse on hive is released bees are spawnd and hive returns to its normal position. Can only work when there are no other bees on screen
 void mouseReleased() {
   if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
     if (bees.size() == 0) {
@@ -221,12 +221,13 @@ void mouseReleased() {
     }
     hiveRot = 0;
   }
-  else if (dist(mouseX, mouseY, width, height) < stoneSize/2) {
+  // Same for scorpions
+  else if (dist(mouseX, mouseY, stoneX, stoneY) < stoneHeight) {
     if (scorpios.size() == 0) {
-      for(int s = 0; s < 10; s++) {
+      for(int s = 0; s < 5; s++) {
         scorpios.add(new Scorpio());
       }
     }
-    stoneRot = 0;
+    stoneLift = 0;
   }
 }
