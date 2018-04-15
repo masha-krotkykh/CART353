@@ -7,11 +7,22 @@ class Stats {
   int rb = 0;
   int gb = 0;
   int bb = 0;
+  int statsHeight = 50;
+  float jSize;
+  float fSize;
+  float barSize = 50;
+  
+
   // Current progress
   int foodEaten = 0;
   int level = 0;
   int levelUp;
-  int gamesWon;
+  //int gamesWon;
+  
+  PImage joyImg = loadImage("joy.png");
+  PImage hungerImg = loadImage("hunger.png");
+  PImage levelImg = loadImage("level.png");
+  PImage playImg = loadImage("play.png");
 
 
 // Function to track current progress 
@@ -23,62 +34,72 @@ class Stats {
     } 
 
     // Every 10 levelUps lead to level +
-    if (levelUp >= 10) {
-      level = level + levelUp/10;
+    if (levelUp >= 20) {
+      level = level + levelUp/20;
       levelUp = 0;
     }
   }
   
   void update() {
     // Colour of stat bars depending on hunger and boredom levels
-    if (hero.fullness >= 14000) {
+    if (hero.fullness >= (hero.maxFullness / 3) * 2) {
       rh = 0;
       gh = 255;
       bh = 0;
+      fSize = barSize;
     }
-    else if (hero.fullness >= 7000) {
+    else if (hero.fullness >= hero.maxFullness / 3) {
       rh = 255;
       gh = 255;
       bh = 0;
+      fSize = (barSize / 3) * 2;
     }
     else {
       rh = 255;
       gh = 0;
       bh = 0;
+      fSize = barSize / 3;
     }
     
-    if (hero.joy >= 18000) {
+    if (hero.joy >= (hero.maxJoy / 3) * 2) {
       rb = 0;
       gb = 255;
       bb = 0;
+      jSize = barSize;
     }
-    else if (hero.joy >= 9000) {
+    else if (hero.joy >= hero.maxJoy / 3) {
       rb = 255;
       gb = 255;
       bb = 0;
+      jSize = (barSize / 3) * 2;
     }
     else {
       rb = 255;
       gb = 0;
       bb = 0;
+      jSize = barSize / 3;
     }
   }
   
   void display() {
-    // Display stats bars
-    noStroke();
-    fill(rh,gh,bh,100);
-    rectMode(CENTER);
-    rect(width - 10, height / 2, 20, height);
-    textAlign(CENTER);
-    text(levelUp, width / 2 - 20, 20);
-    text(level, width / 2 + 20, 20);
     
-    fill(rb,gb,bb,100);
-    rect(width - 30, height / 2, 20, height);
+    // Joy level
+    noStroke();
+    fill(rb,gb,bb);
+    rectMode(CORNER);
+    rect(50, barSize-jSize, 5, jSize - 7); // give a little padding so that the bar doesn't touch the edge
+    image(joyImg, 25, statsHeight/2, 35, 35);
+    
+    // Fullness level
+    fill(rh,gh,bh);
+    rect(125, barSize-fSize, 5, fSize - 7);
+    image(hungerImg, 100, statsHeight/2, 35, 35);
+    
     textAlign(CENTER);
-    text(levelUp, width / 2 - 20, 20);
-    text(level, width / 2 + 20, 20);
+    fill(155);  
+    textSize(30);
+    text(level, width / 2 + 40, statsHeight - 15);
+    image(levelImg, width / 2, statsHeight / 2, 50, 50);
   }
  
   // Saving current stats into JSON object

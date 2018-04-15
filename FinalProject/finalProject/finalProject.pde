@@ -19,7 +19,6 @@ import sprites.utils.*;
 PImage bgImg;
 PImage bgNormal;
 PImage bgAngry;
-PImage bgDirty;
 
 // By default none of controll keys are pressed
 boolean right = false;
@@ -41,6 +40,7 @@ int stoneY = 375;
 float stoneLift;
 PImage stoneImg;
 
+// Hero animation sprite sheet
 String currentSprite;
 
 // By default start with the main screen
@@ -65,22 +65,22 @@ ArrayList<Bee> bees = new ArrayList<Bee>();
 ArrayList<Scorpio> scorpios = new ArrayList<Scorpio>();
 
 void setup() {
-  size(800, 400);
+  size(800, 420);
   stats = new Stats();
   ui = new UI();
   snek = new Snek();
   bubbles = new Bubbles();
   
-  // Create an instance of Hero
+  // Create an instance of Hero, hive and stone
   hero = new Hero();
   hiveImg = loadImage("hive.png");
   stoneImg = loadImage("stone.png");
+  //images for the background
   bgNormal = loadImage("bg_normal.jpg");
   bgAngry = loadImage("bg_angry.jpg");
-  bgDirty = loadImage("bg_dirty.jpg");
   
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
-  evolution = new Sprite(this, "blob.png", 12, 8, 0);
+  evolution = new Sprite(this, "blob.png", 12, 12, 0);
   // Check if the file with current progress exists
   // if it does, load progress from the file
   progress = new File(dataPath("stats.json"));
@@ -97,15 +97,17 @@ void draw() {
   if(state == 1) {
     mainScreen();
   }
-  // gamesScreen displays when user wants to play a game
+  // main gamesScreen displays when user wants to play a game
   else if(state == 2) {
     ui.gamesScreen();
   }
     
+  // snake game
   else if(state == 21) {
     ui.snakeScreen();
   }
   
+  // bubbles game
   else if(state == 22) {
     ui.bubblesScreen();
   }
@@ -133,7 +135,7 @@ void mainScreen() {
   translate(hiveSize/2,0);
   imageMode(CENTER);
   rotate(hiveRot);
-  image(hiveImg, hiveX - hiveSize/2, hiveY, hiveSize, hiveSize);
+  image(hiveImg, hiveX - hiveSize/2, hiveY + stats.statsHeight, hiveSize, hiveSize);
   popMatrix();
 
   // We get the time elapsed since the last frame (the deltaTime)
@@ -172,6 +174,7 @@ void mainScreen() {
     scorpio.checkCollision(hero);
   }
   
+  // if user wants to play a geme
   if (key == 'p') {
     state = 2;
   }

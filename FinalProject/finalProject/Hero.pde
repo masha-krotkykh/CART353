@@ -53,19 +53,22 @@ class Hero {
     if (joy < maxJoy / 2) {
       heroState = 12;
     }
+    else if (fullness < maxFullness / 2) {
+      heroState = 24;
+    }
     else heroState = 0;
     // switching to the corresponding row of the sprite sheet depending on hero's current joy level and age
     if (stats.level < 1) {
       growth = 0;
     }
     else if (stats.level >= 1 && stats.level < 2) {
-      growth = 24;
+      growth = 36;
     }
     else if (stats.level >=2 && stats.level < 3) {
-      growth = 48;
+      growth = 72;
     }
     else if (stats.level >= 3 ) {
-      growth = 72;
+      growth = 120;
     }
     
     // Hero gets hungrier and sadder over time
