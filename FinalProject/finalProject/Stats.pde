@@ -1,4 +1,4 @@
-// class to register statistics
+// class to register statistics of the main program not mini-games
 class Stats {
   // Colours for stat bars 
   int rh = 0;
@@ -89,12 +89,12 @@ class Stats {
     noStroke();
     fill(rb,gb,bb);
     rectMode(CORNER);
-    rect(50, barSize-jSize, 5, jSize - 7); // give a little padding so that the bar doesn't touch the edge
+    rect(50, barSize - jSize, 5, jSize - 7); // give a little padding so that the bar doesn't touch the edge
     image(joyImg, 25, statsHeight/2, 35, 35);
     
     // Fullness level
     fill(rh,gh,bh);
-    rect(125, barSize-fSize, 5, fSize - 7);
+    rect(125, barSize - fSize, 5, fSize - 7);
     image(hungerImg, 100, statsHeight/2, 35, 35);
     
     // Level

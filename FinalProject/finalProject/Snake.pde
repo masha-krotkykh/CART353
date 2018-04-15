@@ -3,6 +3,8 @@
 // Class for Snake object
 // Variables for the snake
 class Snake {
+  PImage shine = loadImage("shine.png");
+  PImage firefly = loadImage("firefly.png");
   float x = width/2;
   float y = height/2;
   float speedX = 0;
@@ -41,7 +43,7 @@ class Snake {
     y = y + speedY * (2 + snek.total/20);
     
     // If snake hits a wall, game ends and snake's progress resets to 0
-    if (x + snek.size/2 >= width || x - snek.size/2 <= 0 || y + snek.size/2 >= height || y - snek.size/2 <= 0) {
+    if (x + snek.size/2 >= snek.margin + snek.screenWidth || x - snek.size/2 <= snek.margin || y + snek.size/2 >= height - snek.margin || y - snek.size/2 <= snek.margin) {
       tail.clear();
       fail();
     }
@@ -69,12 +71,11 @@ class Snake {
   // Display the snake
   // loop through the array of snake's tale to display each section
   void show() {
-    fill(255);
     for (PVector v : tail) {
-      rectMode(CENTER);
-      rect(v.x, v.y, snek.size, snek.size);
+      imageMode(CENTER);
+      image(shine, v.x, v.y, snek.size, snek.size);
     }
     // display the snake's head
-    rect(x, y, snek.size, snek.size);
+    image(firefly, x, y, snek.size, snek.size);    
   }
 }

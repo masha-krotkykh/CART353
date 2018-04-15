@@ -68,7 +68,7 @@ class Hero {
       growth = 72;
     }
     else if (stats.level >= 3 ) {
-      growth = 120;
+      growth = 108;
     }
     
     // Hero gets hungrier and sadder over time
