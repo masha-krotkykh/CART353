@@ -46,7 +46,7 @@ class Hero {
     location.add(velocity);
     acceleration.mult(0);
     // Constrain hero's location within the window
-    location.y = constrain(location.y, hHeight / 2, yOffset);
+    location.y = constrain(location.y, hHeight / 2 + stats.statsHeight / 2, yOffset);
     location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
     
     // If hero is sad or hungry, his avatar will be changed to an evil doppelganger

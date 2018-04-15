@@ -10,11 +10,13 @@ class Food {
   boolean collide = false;  
   PImage foodImg;
   boolean isDead = false;
+  float accX;
+  float accY;
 
   void update() {
-    // Update position by velocity and velocity bu=y acceleration
+    // Update position by velocity and velocity by acceleration
     // Random acceleration to immitate more organic movement
-    acceleration = PVector.random2D();
+    acceleration = new PVector(accX, accY);
     velocity.add(acceleration);
     velocity.limit(topspeed);
     location.add(velocity);

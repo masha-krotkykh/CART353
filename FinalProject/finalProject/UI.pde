@@ -1,25 +1,28 @@
 // Class that will be responsible for user interface and different screens depending on game states
 
 class UI {
+  PImage bg = loadImage("gameMenu.jpg"); 
 
   // Screen for picking a game to play 
   void gamesScreen() {
-    background(0);
-    textAlign(CENTER);
-    text("1. <s> Snake  2. <b> Bubbles 3. <w> Shuffle 4. <0> Home", width/2, height/2);
-    // Keys to press to pick a specific game
-    if(key == 's') {
-      state = 21;
-    }
-    else if(key == 'b') {
-      state = 22;
-    }
-    else if(key == 'w') {
-      state = 23;
-    }
-    else if(key == '0') {
-      state = 1;
-    }
+    background(bg);
+    // To pick a specific game
+    if (mousePressed) {
+      if (mouseX < width / 2) {
+        if(mouseY > 48 && mouseY < 95) {
+          state = 21;
+        }
+        else if(mouseY > 140 && mouseY < 187) {
+          state = 22;
+        }
+        else if(mouseY > 232 && mouseY < 280) {
+          state = 23;
+        }
+      }  
+      else if (mouseX > width/2 && mouseY > 330 && mouseY < 380) {
+        state = 1;
+      }
+    }  
   }
   
   // Screen for snake game

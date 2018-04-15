@@ -11,6 +11,8 @@ class Stats {
   float jSize;
   float fSize;
   float barSize = 50;
+  float playX = width - 50;
+  float playY = statsHeight/2;
   
 
   // Current progress
@@ -95,11 +97,16 @@ class Stats {
     rect(125, barSize-fSize, 5, fSize - 7);
     image(hungerImg, 100, statsHeight/2, 35, 35);
     
+    // Level
     textAlign(CENTER);
     fill(155);  
     textSize(30);
     text(level, width / 2 + 40, statsHeight - 15);
     image(levelImg, width / 2, statsHeight / 2, 50, 50);
+    
+    // Game center
+    // kept in Stats instead UI for consistency 
+    image(playImg, playX, playY, 35, 35);
   }
  
   // Saving current stats into JSON object

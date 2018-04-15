@@ -1,4 +1,4 @@
-// Bee class. Bees will be food for the Hero
+// Scorpio class. Scorpios will be food for the Hero
 class Scorpio extends Food {
  // Define main properties 
   PImage scorpioImg = loadImage("scorpio.png");    
@@ -16,15 +16,17 @@ class Scorpio extends Food {
   void update() {
     // Call update from super class Food
     super.update();
-    // Constrain location within window
-    //location.x = constrain(location.x, size/2, width - size/2);
+    accX = random(-0.2, 0);
+    accY = random(-1, 1);
+    // Constrain location 
+    // wrap around the window
     location.y = constrain(location.y, hero.yOffset, height - size/2);
-    if (location.x >= width || location.x <= 0) {
-      velocity.x = -velocity.x;
+    if (location.x <= 0) {
+      location.x = width + size/2;
     }
   }
   
-  // Check for collision with the Hero
+  // Check for collision with Hero
   void checkCollision(Hero hero) {
     super.checkCollision(hero);
     // Remove bee from an arrayList if it's been eaten

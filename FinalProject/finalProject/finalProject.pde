@@ -28,7 +28,7 @@ boolean down = false;
 
 // Variables for hive and stone size and location
 int hiveX = 40;
-int hiveY = 40;
+int hiveY = 90;
 int hiveSize = 80;
 float hiveRot;
 PImage hiveImg;
@@ -127,7 +127,6 @@ void mainScreen() {
   }
   background(bgImg);
   // Draw a bee hive and stone
-  
   imageMode(CENTER);
   image(stoneImg, stoneX, stoneY + stoneLift, stoneWidth, stoneHeight);
   
@@ -135,7 +134,7 @@ void mainScreen() {
   translate(hiveSize/2,0);
   imageMode(CENTER);
   rotate(hiveRot);
-  image(hiveImg, hiveX - hiveSize/2, hiveY + stats.statsHeight, hiveSize, hiveSize);
+  image(hiveImg, hiveX - hiveSize/2, hiveY, hiveSize, hiveSize);
   popMatrix();
 
   // We get the time elapsed since the last frame (the deltaTime)
@@ -172,11 +171,6 @@ void mainScreen() {
     scorpio.update();
     scorpio.display();
     scorpio.checkCollision(hero);
-  }
-  
-  // if user wants to play a geme
-  if (key == 'p') {
-    state = 2;
   }
 }
 
@@ -232,5 +226,10 @@ void mouseReleased() {
       }
     }
     stoneLift = 0;
+  }
+  
+  // if user wants to play a game
+  if (state == 1 && dist(mouseX, mouseY, stats.playX, stats.playY) < stats.statsHeight/2) {
+    state = 2;
   }
 }

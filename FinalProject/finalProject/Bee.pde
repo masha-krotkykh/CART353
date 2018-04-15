@@ -17,6 +17,8 @@ class Bee extends Food {
   void update() {
     // Call update from super class Food
     super.update();
+    accX = random(-3, 3);
+    accY = random(-2, 2);
     // Constrain location within window
     location.x = constrain(location.x, size/2, width - size/2);
     location.y = constrain(location.y, stats.statsHeight, hero.yOffset);
