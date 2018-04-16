@@ -89,7 +89,6 @@ void setup() {
   }
 }
 
-
 void draw() {
   // Display the current screen according to the game stage
   
@@ -115,6 +114,10 @@ void draw() {
   //else if(state == 23) {
   //  stats.shuffleScreen();
   //}
+  
+  else if(state == 0) {
+    ui.endScreen();
+  }
 }
 
 
@@ -172,10 +175,20 @@ void mainScreen() {
     scorpio.display();
     scorpio.checkCollision(hero);
   }
+  
+    // if hero dies go to end screen
+  if (hero.deceased) {
+    state = 0;
+  }
 }
 
 // Check if any of control keys is pressed
 void keyPressed() {
+  // When any key is pressed inactivity timer gets reset
+  // if hero is asleep he'll wake up
+  hero.resetTimer();
+  hero.inactivityCountdown = true;
+
   if (keyCode == RIGHT) {
     right = true;
   }
@@ -200,6 +213,16 @@ void keyReleased() {
 
 // When hive is clicked it rotates slightly 
 void mousePressed() {
+  
+  println(hero.deceased);
+  
+  
+  
+  // When mouse is pressed inactivity timer gets reset
+  // if hero is asleep he'll wake up
+  hero.resetTimer();
+  hero.inactivityCountdown = true;
+  
   if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
     hiveRot = random(-0.2, 0.2);
   } 
@@ -229,7 +252,7 @@ void mouseReleased() {
   }
   
   // if user wants to play a game
-  if (state == 1 && dist(mouseX, mouseY, stats.playX, stats.playY) < stats.statsHeight/2) {
+  if (state == 1 && dist(mouseX, mouseY, stats.playX, stats.playY) < stats.statsHeight / 2) {
     state = 2;
   }
 }

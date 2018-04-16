@@ -14,7 +14,6 @@ class Stats {
   float playX = width - 50;
   float playY = statsHeight/2;
   
-
   // Current progress
   int foodEaten = 0;
   int level = 0;
@@ -25,7 +24,7 @@ class Stats {
   PImage hungerImg = loadImage("hunger.png");
   PImage levelImg = loadImage("level.png");
   PImage playImg = loadImage("play.png");
-
+  
 
 // Function to track current progress 
 // Every 10 bees lead to levelUp +1
@@ -56,11 +55,17 @@ class Stats {
       bh = 0;
       fSize = (barSize / 3) * 2;
     }
-    else {
+    else if (hero.fullness < hero.maxFullness / 3 && hero.fullness > 0) {
       rh = 255;
       gh = 0;
       bh = 0;
       fSize = barSize / 3;
+    }
+    else {
+      rh = 0;
+      gh = 0;
+      bh = 0;
+      fSize = 0;
     }
     
     if (hero.joy >= (hero.maxJoy / 3) * 2) {
@@ -75,16 +80,27 @@ class Stats {
       bb = 0;
       jSize = (barSize / 3) * 2;
     }
-    else {
+    else if (hero.joy < hero.maxJoy / 3 && hero.joy > 0) {
       rb = 255;
       gb = 0;
       bb = 0;
       jSize = barSize / 3;
     }
+    else {
+      rb = 0;
+      gb = 0;
+      bb = 0;
+      jSize = 0;
+    }
+    
+    // Reset all progress if hero dies
+    if (hero.deceased) {
+      levelUp = 0;
+      level = 0;
+    }
   }
   
   void display() {
-    
     // Joy level
     noStroke();
     fill(rb,gb,bb);

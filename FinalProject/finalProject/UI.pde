@@ -2,6 +2,7 @@
 
 class UI {
   PImage bg = loadImage("gameMenu.jpg"); 
+  PImage end = loadImage("end.jpg");
 
   // Screen for picking a game to play 
   void gamesScreen() {
@@ -22,7 +23,7 @@ class UI {
       else if (mouseX > width/2 && mouseY > 330 && mouseY < 380) {
         state = 1;
       }
-    }  
+    } 
   }
   
   // Screen for snake game
@@ -30,10 +31,22 @@ class UI {
     snek.draw();
     snek.keyPressed();
   }
-  
+ 
+  // Screen for bubble game
   void bubblesScreen() {
     bubbles.draw();
     bubbles.keyPressed();
     bubbles.handleEndGame();
+  }
+  
+  // Screen for the end
+  void endScreen() {
+    background(end);
+    if (mousePressed && mouseY > height / 4 * 3) {
+      hero.joy = hero.maxJoy;
+      hero.fullness = hero.maxFullness;
+      hero.deceased = false;
+      state = 1;
+    }
   }
 }

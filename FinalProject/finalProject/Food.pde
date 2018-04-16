@@ -39,7 +39,7 @@ class Food {
     }
   }
 
- // Display bees
+ // Display creatures
   void display() {
     imageMode(CENTER);
     image(foodImg, location.x, location.y, size, size);

@@ -17,6 +17,6 @@ class Aim {
     // Display the circle
     fill(255);
     stroke(100);
-    ellipse(x,y,w,w);
+    ellipse(x, y, w, w);
   }
 }
