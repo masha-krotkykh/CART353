@@ -6,8 +6,9 @@ class Paddle {
   int paddleY;
   int paddleVX;
   int paddleSpeed = 5;
-  int paddleWidth = 150;
-  int paddleHeight = 16;
+  int paddleWidth = 120;
+  int paddleHeight = 68;
+  PImage paddle = loadImage("paddle.png");
   
   Paddle(){
   }
@@ -15,7 +16,7 @@ class Paddle {
    //Sets up padle at the bottom center of the window
   void setupPaddle() {
     paddleX = width/2;
-    paddleY = height - paddleHeight;
+    paddleY = height - paddleHeight / 2;
     paddleVX = 0;
   }
   
@@ -40,10 +41,10 @@ class Paddle {
   
   void drawPaddle() {
     int squareWidth = floor(random(5, 60));
-    int squareHeight = paddleHeight;
+    int squareHeight = 16;
     int rightSquareX = paddleX;
     int leftSquareX = paddleX - squareWidth;
-    int squareY = paddleY + paddleHeight/2;
+    int squareY = height - squareHeight / 2;
    
     int r = floor(random(255));
     int g = floor(random(10));
@@ -58,5 +59,6 @@ class Paddle {
       rightSquareX = rightSquareX + squareWidth;
       leftSquareX = leftSquareX - squareWidth;
     }
+    image(paddle, paddleX, paddleY - squareHeight / 2);
   }
 }

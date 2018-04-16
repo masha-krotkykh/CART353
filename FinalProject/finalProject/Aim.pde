@@ -4,19 +4,22 @@ class Aim {
   
   float x;
   float y;
-  float w;
+  float aimHeight;
+  float aimWidth;
   boolean collide;
+  PImage comb;
   
-  Aim(float tempX, float tempY, float tempW) {
+  Aim(PImage tempImg, float tempX, float tempY, float tempAimWidth, float tempAimHeight) {
     x = tempX;
     y = tempY;
-    w = tempW;
+    aimHeight = tempAimHeight;
+    aimWidth = tempAimWidth;
+    comb = tempImg;
   }
   
   void display() {
-    // Display the circle
-    fill(255);
-    stroke(100);
-    ellipse(x, y, w, w);
+    // Display the honeycomb
+    imageMode(CENTER);
+    image(comb, x, y, aimWidth, aimHeight);
   }
 }

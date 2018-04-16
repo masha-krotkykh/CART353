@@ -6,9 +6,10 @@ class Ball {
   int ballY;
   int ballVX;
   int ballVY;
-  int ballSpeed = 5;
-  int ballSize = 16;
+  int ballSpeed = 4;
+  int ballSize = 22;
   color ballColor = color(255);
+  PImage beeImg = loadImage("bee.png");
   
   Ball() {
   }
@@ -34,16 +35,14 @@ class Ball {
   }
   
   void drawBall() {
-    ellipseMode(CENTER);
-    noStroke();
-    fill(ballColor);
-    ellipse(ballX, ballY, ballSize, ballSize);
+    imageMode(CENTER);
+    image(beeImg, ballX, ballY, ballSize, ballSize);
   }
    
   //Returns a true or false value for ballOverlapsePaddle checking if the condition of the ball hitting the paddle is met. The condition is false by default
   boolean ballOverlapsPaddle(Paddle paddle) {
     if (ballX - ballSize/2 > paddle.paddleX - paddle.paddleWidth/2 && ballX + ballSize/2 < paddle.paddleX + paddle.paddleWidth/2) {
-      if (ballY > paddle.paddleY - paddle.paddleHeight/2) {
+      if (ballY > paddle.paddleY - paddle.paddleHeight / 2) {
         return true;
       }
     }

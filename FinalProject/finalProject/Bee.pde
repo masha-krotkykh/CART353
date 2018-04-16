@@ -1,9 +1,7 @@
 // Bee class. Bees will be food for the Hero
 class Bee extends Food {
  // Define main properties 
-  PImage beeImg = loadImage("bee.png");  
-  
- 
+ PImage beeImg = loadImage("bee.png");
  // Construct a bee, where it will originate and limit its top speed 
   Bee() {
     location = new PVector(hiveX, hiveY);

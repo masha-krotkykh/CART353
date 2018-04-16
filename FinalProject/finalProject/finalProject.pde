@@ -120,7 +120,6 @@ void draw() {
   }
 }
 
-
 void mainScreen() {  
   if(hero.heroState == 0) {
     bgImg = bgNormal;
@@ -213,11 +212,6 @@ void keyReleased() {
 
 // When hive is clicked it rotates slightly 
 void mousePressed() {
-  
-  println(hero.deceased);
-  
-  
-  
   // When mouse is pressed inactivity timer gets reset
   // if hero is asleep he'll wake up
   hero.resetTimer();
