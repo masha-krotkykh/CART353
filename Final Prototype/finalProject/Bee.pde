@@ -1,8 +1,10 @@
-// Bee class. Bees will be food for the Hero
+// Bee class. Bees will be food for the Hero.
+// subclass of Food class
+
 class Bee extends Food {
  // Define main properties 
  PImage beeImg = loadImage("bee.png");
- // Construct a bee, where it will originate and limit its top speed 
+ // Define and construct a bee, where it will originate and limit its top speed 
   Bee() {
     location = new PVector(hiveX, hiveY);
     velocity = new PVector(0, 0);
@@ -15,6 +17,7 @@ class Bee extends Food {
   void update() {
     // Call update from super class Food
     super.update();
+    // Add random movement for more organic look
     accX = random(-3, 3);
     accY = random(-2, 2);
     // Constrain location within window

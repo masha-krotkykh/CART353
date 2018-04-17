@@ -1,6 +1,7 @@
 // class do define the main character
+
 class Hero {
-  // Main properties
+  // Main properties: location, velocity, acceleration, size, speed, mass, fullness, joy
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -9,7 +10,7 @@ class Hero {
   float speed = 0.2;
   float mass;
   // An offset so that Hero doesn't touch r=the bottom edge
-  int yOffset = height - 50;
+  int yOffset = height - 60;
   // variables to determine hero's state
   int maxFullness = 21000;
   int maxJoy = 27000;
@@ -22,17 +23,18 @@ class Hero {
   //depending on current level avatar will grow
   int growth = 0;
 
-  // Will be activated when no actions are performed
+  // Will be activated when no actions are performed. After 1 minute Tamagotchi will fall asleep
   boolean inactivityCountdown = true;
   int startTime = 0;
   int timeElapsed;
-  int countDown = 60;
+  int snoozeTime = 60;
 
   Hero() {
     // PVectors to model hero's movement
     location = new PVector(width/2, yOffset);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
+    
     mass = 30;
     fullness = maxFullness;
     joy = maxJoy;
@@ -53,17 +55,16 @@ class Hero {
     location.add(velocity);
     acceleration.mult(0);
     // Constrain hero's location within the window
-    if (countDown > 0) {
-      location.y = constrain(location.y, hHeight / 2 + stats.statsHeight / 2, yOffset);
-      location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
-    }
+    location.y = constrain(location.y, hHeight / 2 + stats.statsHeight / 2, yOffset);
+    location.x = constrain(location.x, hWidth / 2, width - hWidth / 2);
   
-    // If hero is sad or hungry, his avatar will be changed to an evil doppelganger
+    // If hero is ignored and not exercised his avatar will be changed to an evil doppelganger; he gets sad when hungry
+    // heroState and growth will define image sequences in the sprite sheet
     if (joy < maxJoy / 2) {
-      heroState = 12;
+      heroState = 14;
     } 
     else if (fullness < maxFullness / 2) {
-      heroState = 24;
+      heroState = 28;
     } 
     else heroState = 0;
     // switching to the corresponding row of the sprite sheet depending on hero's current joy level and age
@@ -71,13 +72,13 @@ class Hero {
       growth = 0;
     } 
     else if (stats.level >= 1 && stats.level < 2) {
-      growth = 36;
+      growth = 42;
     } 
     else if (stats.level >=2 && stats.level < 3) {
-      growth = 72;
+      growth = 84;
     } 
     else if (stats.level >= 3 ) {
-      growth = 108;
+      growth = 126;
     }
 
     // Hero gets hungrier and sadder over time
@@ -86,11 +87,24 @@ class Hero {
 
     fullness = constrain(fullness, 0, maxFullness);
     joy = constrain(joy, 0, maxJoy);
+    
+    
+    // If no actions are taken hero falls asleep in 60 seconds
+    if (inactivityCountdown) {
+      timeElapsed = (millis() - startTime) / 1000;
+      snoozeTime = 60 - timeElapsed;
+    }  
 
     // Move when one of the arrow keys is pressed and the hero is not dead
     // Set the hero's location and frame sequences from the sprite to animate
     evolution.setXY(hero.location.x, hero.location.y);
-    if (!deceased) {
+    // When timer gets to 0 Hero goes to sleep 
+    // Timer stops
+    if (snoozeTime <= 0) {
+      evolution.setFrameSequence(growth + heroState + 12, growth + heroState + 13, 0.6);
+      inactivityCountdown = false;
+    }
+    else {
       if (right == true) {
         acceleration.x = speed;
         evolution.setFrameSequence(growth + heroState + 8, growth + heroState + 11, 0.2);
@@ -116,28 +130,12 @@ class Hero {
     if (joy <= 0 && fullness <= 0) {
       deceased = true;  
     }
-
-    // If no actions are taken hero disappears in 60 seconds
-    if (inactivityCountdown) {
-      timeElapsed = (millis() - startTime) / 1000;
-      countDown = 60 - timeElapsed;
-    }  
-
-    // When timer gets to 0 Hero hides 
-    // Timer stops
-    if (countDown <= 0) {
-      location.x = -100;
-      inactivityCountdown = false;
-    }
   }
 
   // Function will be called when any key or mouse is pressed
-  // makes hero re-appear next to his house
+  // makes hero wake up
   void resetTimer() {
-    countDown = 60;
+    snoozeTime = 60;
     startTime = millis();
-    if (location.x < 0) {
-      location.x = width / 2;
-    }
   }
 }

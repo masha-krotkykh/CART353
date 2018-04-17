@@ -1,6 +1,8 @@
 // Main class for bubble game
 // based on pong game from CART253 class
 
+// Define main variables
+// Start with 5 lives, level 1, 2 aims of size 60
 class Bubbles {
   color backgroundColor = color(0);
   int lives = 5;
@@ -11,6 +13,7 @@ class Bubbles {
   int level = 1;
   int aimNumber = 2;
   int currentSize = 60;
+  // images for UI display
   PImage comb = loadImage("honeycomb.png");
   PImage livesImg = loadImage("lives.png");
   
@@ -34,6 +37,7 @@ class Bubbles {
   void draw() {
     background(backgroundColor); 
     fill(255);
+    // display UI images and current progress
     textAlign(LEFT);
     textFont(snek.font, 20);
     text(lives, width - 30, 30);

@@ -1,17 +1,10 @@
 // Tamagotchi 2.0
-// The idea  behind Tamagotchi 2.0 is to create a virtual pet for those who are too busy to have a live one. 
-// Although this idea is not a new one, it deserves some attention and could be reworked a little bit to be 
-// suitable for adults  instead of children. 
-// The main concept is to create a selection of mini games to keep the virtual pet in a good mood and help it grow. 
-// The pet will also require feeding and attention to develop certain positive character traits; 
-// or, in case of neglect, it will develop negative character traits (violent behavior or, maybe, unhealthy eating habits?). 
-// The Tamagotchi will also have different appearance depending on how it is treated.
-// The Tamagotchi will be controlled by the arrow keys, the mini games will be activated from the menu, and the progress 
-// and current state (hunger level, boredom level) will be displayed at the top of the screen.
-// This ability to influence the development and growth of the virtual creature is aimed at creating a “special bond” 
-// between the user and the Tamagotchi that expands the usual gaming experience.
-// Since our lives become increasingly busy and free time more and more limited, I find this project worthy exploration because 
-// it can become a great stress reliever as well as virtual companion or toy to replace a real pet.
+// It is simple and satisfying to take care of a virtual pet without having to commit to having a real one. 
+// Tamagotchi must be fed and played with in order to stay in a good mood and in a good health. 
+// If Tamagotchi gets hungry, he gets sad, if he is neglected for too long he gets mad and scary as well as his surroundings. 
+// If no actions are performed he falls asleep. If he is too bored and too hungry, he dies. 
+// There are two mini games user can play to entertain and train his pet, which also helps him grow.
+// DON'T LET YOUR TAMAGOTCHI STARVE OR PINE!
 
 import sprites.*;
 import sprites.maths.*;
@@ -66,13 +59,14 @@ ArrayList<Scorpio> scorpios = new ArrayList<Scorpio>();
 
 void setup() {
   size(800, 420);
+  // Create an instance of Stats, UI, Snake game, Bubble game, and Hero
   stats = new Stats();
   ui = new UI();
   snek = new Snek();
   bubbles = new Bubbles();
-  
-  // Create an instance of Hero, hive and stone
   hero = new Hero();
+  
+  // load images for hive and stone
   hiveImg = loadImage("hive.png");
   stoneImg = loadImage("stone.png");
   //images for the background
@@ -80,7 +74,7 @@ void setup() {
   bgAngry = loadImage("bg_angry.jpg");
   
   // Create Sprite by providing "this", the file with the spritesheet, the number of columns and rows in the sheet, and the z-index
-  evolution = new Sprite(this, "blob.png", 12, 12, 0);
+  evolution = new Sprite(this, "blob.png", 14, 12, 0);
   // Check if the file with current progress exists
   // if it does, load progress from the file
   progress = new File(dataPath("stats.json"));
@@ -110,10 +104,6 @@ void draw() {
   else if(state == 22) {
     ui.bubblesScreen();
   }
-
-  //else if(state == 23) {
-  //  stats.shuffleScreen();
-  //}
   
   else if(state == 0) {
     ui.endScreen();
@@ -121,17 +111,18 @@ void draw() {
 }
 
 void mainScreen() {  
+  // 0 is default state of Hero, 14 is an angry state
+  // display corresponding backgrounds
   if(hero.heroState == 0) {
     bgImg = bgNormal;
   }
-  if(hero.heroState == 12) {
+  if(hero.heroState == 14) {
     bgImg = bgAngry;
   }
   background(bgImg);
   // Draw a bee hive and stone
   imageMode(CENTER);
   image(stoneImg, stoneX, stoneY + stoneLift, stoneWidth, stoneHeight);
-  
   pushMatrix();
   translate(hiveSize/2,0);
   imageMode(CENTER);
@@ -210,13 +201,13 @@ void keyReleased() {
     up = false;
  } 
 
-// When hive is clicked it rotates slightly 
 void mousePressed() {
   // When mouse is pressed inactivity timer gets reset
   // if hero is asleep he'll wake up
   hero.resetTimer();
   hero.inactivityCountdown = true;
   
+  // When hive is clicked it rotates slightly 
   if (dist(mouseX, mouseY, hiveX, hiveY) < hiveSize/2) {
     hiveRot = random(-0.2, 0.2);
   } 

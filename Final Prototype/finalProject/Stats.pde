@@ -1,6 +1,8 @@
 // class to register statistics of the main program not mini-games
+// current state of Tamagotchi
+
 class Stats {
-  // Colours for stat bars 
+  // variables for stat bars 
   int rh = 0;
   int gh = 0;
   int bh = 0;
@@ -18,8 +20,8 @@ class Stats {
   int foodEaten = 0;
   int level = 0;
   int levelUp;
-  //int gamesWon;
   
+  // UI images to illustrate progress
   PImage joyImg = loadImage("joy.png");
   PImage hungerImg = loadImage("hunger.png");
   PImage levelImg = loadImage("level.png");
@@ -30,19 +32,19 @@ class Stats {
 // Every 10 bees lead to levelUp +1
   void progress() {
     if (foodEaten >= 10) {
-      levelUp = levelUp + foodEaten/10;
+      levelUp = levelUp + foodEaten / 10;
       foodEaten = 0;
     } 
 
-    // Every 10 levelUps lead to level +
+    // Every 20 levelUps lead to level +
     if (levelUp >= 20) {
-      level = level + levelUp/20;
+      level = level + levelUp / 20;
       levelUp = 0;
     }
   }
   
   void update() {
-    // Colour of stat bars depending on hunger and boredom levels
+    // Colour and size of stat bars depending on hunger and boredom levels
     if (hero.fullness >= (hero.maxFullness / 3) * 2) {
       rh = 0;
       gh = 255;
@@ -116,7 +118,7 @@ class Stats {
     // Level
     textAlign(CENTER);
     fill(155);  
-    textSize(30);
+    textFont(snek.font, 30);
     text(level, width / 2 + 40, statsHeight - 15);
     image(levelImg, width / 2, statsHeight / 2, 50, 50);
     

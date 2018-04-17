@@ -1,4 +1,5 @@
-// Bee class. Bees will be food for the Hero
+// Food superclass. Bees and scorpios will inherit from it. They will be food for the Hero
+
 class Food {
  // Define main properties 
   PVector location;

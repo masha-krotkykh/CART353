@@ -1,4 +1,4 @@
-// Class for ball in bubbles game
+// Class for ball (bee) in bubbles game
 
 class Ball {
 // variables for position, size, speed, and velocity
@@ -31,7 +31,6 @@ class Ball {
 
     handleBallHitWall();
     handleBallOffBottom();
-    //bubbles.handleEndGame();
   }
   
   void drawBall() {
@@ -41,7 +40,7 @@ class Ball {
    
   //Returns a true or false value for ballOverlapsePaddle checking if the condition of the ball hitting the paddle is met. The condition is false by default
   boolean ballOverlapsPaddle(Paddle paddle) {
-    if (ballX - ballSize/2 > paddle.paddleX - paddle.paddleWidth/2 && ballX + ballSize/2 < paddle.paddleX + paddle.paddleWidth/2) {
+    if (ballX - ballSize / 2 > paddle.paddleX - paddle.paddleWidth / 2 && ballX + ballSize / 2 < paddle.paddleX + paddle.paddleWidth / 2) {
       if (ballY > paddle.paddleY - paddle.paddleHeight / 2) {
         return true;
       }
@@ -52,7 +51,7 @@ class Ball {
   //If the ball hits the paddle, it changes its direction on Y-axis and its starting Y-position will be right above the paddle. 
   void handleBallHitPaddle(Paddle paddle) {
     if (ballOverlapsPaddle(paddle)) {
-      ballY = paddle.paddleY - paddle.paddleHeight/2 - ballSize/2;
+      ballY = paddle.paddleY - paddle.paddleHeight / 2 - ballSize / 2;
       ballVY = - ballVY;
     }
   }
@@ -60,30 +59,30 @@ class Ball {
   //If the ball misses the paddle and falls off the window, the new ball will appear at its starting position - cener of the window.
   void handleBallOffBottom() {
     if (ballOffBottom()) {
-      ballX = width/2;
-      ballY = height/2;
-      //The score gets updated each time the ball misses the padle
+      ballX = width / 2;
+      ballY = height / 2;
+      //lives gets updated each time the ball misses the padle
       bubbles.lives = bubbles.lives - 1;
     }
   }
   
   //Returns a true or false value for ballOffBottom checking if the bottom of the ball reached the bottom of the window.
   boolean ballOffBottom() {
-    return (ballY - ballSize/2 > height);
+    return (ballY - ballSize / 2 > height);
   }
   
   //If the ball side reaches the left or right side of the window, it changes its direction on X-axis. If it reaches the top of the window, it changes its direction on Y-axis.
   void handleBallHitWall() {
-    if (ballX - ballSize/2 < 0) {
-      ballX = 0 + ballSize/2;
+    if (ballX - ballSize / 2 < 0) {
+      ballX = 0 + ballSize / 2;
       ballVX = -ballVX;
-    } else if (ballX + ballSize/2 > width) {
-      ballX = width - ballSize/2;
+    } else if (ballX + ballSize / 2 > width) {
+      ballX = width - ballSize / 2;
       ballVX = -ballVX;
     }
   
-    if (ballY - ballSize/2 < 0) {
-      ballY = 0 + ballSize/2;
+    if (ballY - ballSize / 2 < 0) {
+      ballY = 0 + ballSize / 2;
       ballVY = -ballVY;
     }
   }

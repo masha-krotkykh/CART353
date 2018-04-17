@@ -46,6 +46,7 @@ class UI {
       hero.joy = hero.maxJoy;
       hero.fullness = hero.maxFullness;
       hero.deceased = false;
+      stats.level = 0;
       state = 1;
     }
   }

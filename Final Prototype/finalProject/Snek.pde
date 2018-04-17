@@ -40,7 +40,6 @@ class Snek {
     image(snake.shine, target.x, target.y, size, size);
     
     // display game progress
-    //textAlign(LEFT);
     fill(50);  
     textAlign(LEFT);
     textFont(font, 17);
@@ -48,6 +47,7 @@ class Snek {
     text("fireflies: " + total, margin * 2 + screenWidth, height - margin * 2.5);
     // display jar
     image(jar, margin * 4 + screenWidth, height / 2 - margin, 150, 150);
+   
     // display hero sprite
     evolution.setXY(width - 70, height / 2 + margin);
     evolution.setFrameSequence(hero.growth, hero.growth + 3, 0.3);

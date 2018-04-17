@@ -1,4 +1,4 @@
-// Class for targets in bubble game to populate the arrayList
+// Class for targets in bubble game to populate the arrayList of honeycombs
 
 class Aim {
   
